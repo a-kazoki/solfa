@@ -1,0 +1,77 @@
+<section ng-controller="var_inviteCtrl" style="min-height: 300px; margin: 50px" class="text-center">
+    <section ng-if="!islogedin">
+        <div class="container">
+            <h3>You are invited to join SOLFA.</h3> Go to <a href="" ng-click="homepage()">Home Page</a>
+
+            <br><br>
+            <h4>Registeration Form</h4>
+            <form class="" ng-submit="reg(regname, regemail, regpass, reregpass)">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Name" ng-model="regname" required>
+                    <i class="form-group__bar"></i>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email Address" ng-model="regemail" required>
+                    <i class="form-group__bar"></i>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" ng-model="regpass" required>
+                    <i class="form-group__bar"></i>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Confirm Password" ng-model="reregpass" required>
+                    <i class="form-group__bar"></i>
+                </div>
+                <p><input type="checkbox" ng-model="agreeterms"><small>Do You Agree With Our <a href="" data-toggle="modal" data-target="#terms">terms and conditions</a>?</small></p>
+                <div ng-show="regpass !== reregpass" style="color: #f00">Password should match Confirm Password</div>
+                <span ng-if="errorreg">{{errormsg}}</span>
+                <button ng-show="regpass !== reregpass || !agreeterms" class="btn btn-primary btn-block m-t-10 m-b-10 disabled">Register</button>
+                <button type="submit" ng-show="regpass === reregpass && agreeterms" class="btn btn-primary btn-block m-t-10 m-b-10">Register</button>
+                <div class="top-nav__auth">
+                    <span>or</span>
+                    <div>Sign up using</div>
+                    <a href="" class="mdc-bg-blue-500" ng-click="FBReg()">
+                        <i class="zmdi zmdi-facebook"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section ng-if="islogedin">
+        <h3>You are already loged in</h3>
+        <p class="lead">to invite friends share to them this URL:</p>
+        <a>http://localhost:8888/solfa/new%20solfa/index.html#!/invite/{{userid}}</a>
+    </section>
+</section>
+
+
+                <!-- regestration confirmation Modal -->
+                <div class="modal fade" id="regconf" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>Regestration Confirmation</h4>
+                          <p style="color: #000">Your registration was success. please visit your email and click on the confirmation link.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- terms Modal -->
+                <div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>terms and conditions</h4>
+                          <p style="color: #000">terms</p>
+                          <p style="color: #000">conditions</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>

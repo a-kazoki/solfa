@@ -1,0 +1,10 @@
+<section style="min-height: 400px" class="text-center" ng-if="!isblog && !iscommunity && !issearch && !isprofile && !isitem && !isinvite && !isconfirm">
+    <h2>One Moment Please And You Will Be Re-directed</h2>
+</section>
+<div ng-include="'pages/en/blog-details.html'" ng-if="isblog"></div>
+<div ng-include="'pages/en/listing-detail.html'" ng-if="isitem"></div>
+<div ng-include="'pages/en/owner.html'" ng-if="isprofile"></div>
+<div ng-include="'pages/en/searchres.html'" ng-if="issearch"></div>
+<div ng-include="'pages/en/community.html'" ng-if="iscommunity"></div>
+<div ng-include="'pages/en/invitation.html'" ng-if="isinvite"></div>
+<div ng-include="'pages/en/confirmurl.html'" ng-if="isconfirm"></div>

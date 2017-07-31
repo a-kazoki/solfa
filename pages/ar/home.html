@@ -1,0 +1,238 @@
+<body>
+    <style>
+        .yellow_button {
+            height: 50px;
+            background-color: #fecf09;
+            font-size: 13px;
+            color: #3e3e3e;
+            text-transform: uppercase;
+            border-radius:2px;
+            font-weight: 500;
+        }
+    </style>
+        <header id="lowerheader">
+            <div class="header__search container">
+                <form ng-submit="search(search_type, selectcat, keyword)">
+                    <div class="search">
+                        <div class="search__type">
+                            <select class="yellow_button" style="padding: 5px; width: 100%;" ng-model="search_type" required>
+                                <option value="" disabled ng-selected style="color: #fff; font-size: 13px;color: #3e3e3e;font-weight: 500;text-transform: uppercase">البحث عن</option>
+                                <option ng-value="false" style="font-size: 13px;color: #3e3e3e;font-weight: 500;text-transform: uppercase">الاقتراض</option>
+                                <option ng-value="true" style="font-size: 13px;color: #3e3e3e;font-weight: 500;text-transform: uppercase">التبادل</option>
+                            </select>
+                        </div>
+                        <div class="search__body">
+                            <input type="text" class="search__input" placeholder="ما الذي تبحث عنه؟" data-rmd-action="advanced-search-open" ng-model="keyword" style="margin-left:25px">
+                            <div class="search__advanced">
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>نوع الفئة</label>
+
+                                        <select class="select2" ng-model="selectcat">
+                                            <option value="" disabled ng-selected>اختيار الفئة</option>
+                                            <option ng-value=cat.Category_ID ng-repeat="cat in allCategories">{{cat.Category_Name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 m-t-10">
+                                    <button type="submit" class="btn btn-primary">البحث</button>
+                                    <button class="btn btn-link" data-rmd-action="advanced-search-close">الغاء</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <button class="yellow_button" style="float:right; width:130px; border:none; margin:30px" ng-click="categiriespage()">كل الفئات</button>
+                <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" ng-click="additempage()" ng-if="islogedin">اضافة منتج</button>
+                <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" ng-if="!islogedin">يجب تسجيل الدخول لاضافة منتج</button>
+            </div>
+            <div class="header__recommended">
+                <div class="my-location">
+                    <div class="dropdown my-location__location hidden-xs">
+                        <div class="my-location__title">
+                           <span>احدث منتجاتنا المعروضة</span>
+                        </div>
+                    </div>
+                </div>
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active" style="">
+                                <div class="listings-grid__item" style="width: 400px; height: 400px;margin: auto; display: block">
+                                    <a href="" ng-click="redirectitem(ExclItems[0].Item_ID)">
+                                        <div class="listings-grid__main">
+                                            <img ng-src="{{ExclItems[0].ItemImage}}" alt="" style="height:250px">
+                                            <div class="listings-grid__price">{{ExclItems[0].Type}}</div>
+                                        </div>
+                                        <div class="listings-grid__body">
+                                            <small>{{ExclItems[0].ItemOwnerAddress}}</small>
+                                            <h5>{{ExclItems[0].ItemName}}</h5>
+                                        </div>
+                                        <ul class="listings-grid__attrs">
+                                            <li><img ng-src="{{ExclItems[0].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="item" ng-repeat="execl in ExclItems | limitTo : -ExclItems.length-1">
+                                <div class="listings-grid__item" style="width: 400px; height: 400px; margin: auto; display: block">
+                                    <a href="" ng-click="redirectitem(execl.Item_ID)">
+                                        <div class="listings-grid__main">
+                                            <img ng-src="{{execl.ItemImage}}" alt="" style="height:250px">
+                                            <div class="listings-grid__price">{{execl.Type}}</div>
+                                        </div>
+                                        <div class="listings-grid__body">
+                                            <small>{{execl.ItemOwnerAddress}}</small>
+                                            <h5>{{execl.ItemName}}</h5>
+                                        </div>
+                                        <ul class="listings-grid__attrs">
+                                            <li><img ng-src="{{execl.ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        </ul>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="" data-target="#carousel-example-generic" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="" data-target="#carousel-example-generic" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+            </div>
+        </header>
+        <section class="section">
+            <div class="container">
+                <!--<header class="section__title">
+                    <h2>8,243 Communites</h2>
+                </header>-->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card__header card__header--minimal">
+                                <h2>احدث المجتمعات</h2>
+                                <!--<small>Nunc urnami tempor eget ipsum eurutrum gravida tellus</small>-->
+                            </div>
+
+                            <div class="grid-widget grid-widget--listings">
+                                <div class="col-xs-6" ng-repeat="recentcomm in recentcommunities">
+                                    <a class="grid-widget__item" href="" ng-click="redirectcomm(recentcomm.Community_ID)">
+                                        <img ng-src="{{recentcomm.CommunityImage}}" alt="" style="height: 250px">
+                                        <div class="grid-widget__info">
+                                            <h3>{{recentcomm.CommunityName}}</h3>
+                                            <ul class="listings-grid__attrs">
+                                             <li ng-repeat="commuser in recentcomm.CommunityMembers"><img ng-src="{{commuser.UserImage}}" class="img-circle" style="width: 25px;"></li>
+                                            </ul>
+                                            <p>{{recentcomm.Members_NO}} اعضاء</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="yellow_button" style="float:right; width:130px; border:none; margin:30px" ng-click="communitiespage()">استكشف كل المجتمعات</button>
+                            <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" data-toggle="modal" data-target="#addcommunitymodal" ng-if="islogedin">انشاء مجتمع جديد</button>
+                            <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" ng-if="!islogedin">يجب تسجيل الدخول لانشاء مجتمع جديد</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card tags-list">
+                            <div class="card__header">
+                                <h2>الفئات</h2>
+                                <small>هذه بعض فئاتنا</small>
+                            </div>
+                            <div class="card__body">
+                                <a href="" ng-click="redirect(categ.Category_ID)" class="tags-list__item" ng-repeat="categ in allCategories|limitTo:5">#{{categ.Category_Name}}</a>
+                            <button class="btn btn-default" ng-click="categiriespage()">استكشف الكل</button>
+                            </div>
+                        </div>
+                        <div class="list-group list-group--block contact-lists">
+                            <div class="list-group__header text-left">
+                                {{allusers.length}} قائمة المستخدميين
+                            </div>                  
+                            <div class="list-group__wrap" ng-repeat="user in allusers|limitTo:3">
+                                <a class="list-group-item media" href="" ng-click="redirectuser(user.Refrence_ID)" data-toggle="modal">
+                                    <div class="" style="display: inline-block">
+                                        <div class="avatar-char mdc-bg-amber-400" ng-if="user.ImageURL === null">{{user.Name.substring(0, 2)}}</div>
+                                        <img ng-src="{{user.ImageURL}}" class="list-group__img img-circle" width="50" height="50" alt="" ng-if="user.ImageURL !== null">
+                                    </div>
+                                     <div class="media-body list-group__text" style="display: inline-block">
+                                        <strong>{{user.Name}}</strong>
+                                        <div class="list-group__attrs">
+                                            <div>هذا الشهر: {{user.PointsOfMonth}}</div>
+                                            <div>الكل: {{user.TotalPoints}}</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <!--<div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right" ng-if="islogedin">
+                                            <li><a href="">Add to group</a></li>
+                                            <li><a href="">Add Contact</a></li>
+                                            <li><a href="">Delete</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu pull-right" ng-if="!islogedin" style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">
+                                            <li><p style="padding: 10px 20px">Add to group</p></li>
+                                            <li><p style="padding: 10px 20px">Add Contact</p></li>
+                                            <li><p style="padding: 10px 20px">Delete</p></li>
+                                        </ul>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="load-more" style="margin-bottom: 20px">
+                                <a href="" ng-click="boardpage()"><i class="zmdi zmdi-refresh-alt"></i> استكشف قائمة اكبر</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+</body>
+<!-- community Modal -->
+<div class="modal fade" id="addcommunitymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">انشاء مجتمع جديد</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card" ng-if="!readyforimage">
+            <form class="card__body" ng-submit="newcommunity(name, description)">
+                <div class="form-group form-group--float form-group--float-center">
+                    <input type="text" class="form-control text-center" required ng-model="name">
+                    <i class="form-group__bar"></i>
+                    <label>اسم المجتمع</label>
+                </div>
+                <div class="form-group form-group--float form-group--float-center">
+                    <textarea class="form-control text-center textarea-autoheight" required ng-model="description"></textarea>
+                    <i class="form-group__bar"></i>
+                    <label>تفاصيلة</label>
+                </div>
+                <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+            </form>
+        </div>
+        <div class="card" ng-if="readyforimage">
+            <div class="card__header">
+                <h2>صورة المجتمع</h2>
+            </div>
+
+            <form class="card__body" ng-submit="uploadcommunityimage()">
+                 <div class="new-contact__img">
+                    <img src="img/user_empty.png" alt="">
+                     <input type="file" id="myFileField" name="myFile" />
+                </div>
+                <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

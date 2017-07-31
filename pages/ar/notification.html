@@ -1,0 +1,28 @@
+<style>
+    .activity-log__date {right: 30px; width: 60px}
+</style>
+<div class="main__container">
+    <header class="main__title">
+        <h2>إخطارات</h2>
+    </header>
+    <div class="activity-log">
+        <div class="activity-log__block">
+            <div class="activity-log__item activity-log__item--listing">
+                <div class="activity-log__date">الان</div>
+                <div class="activity-log__content activity-log__content--notes" ng-repeat="notif in notifications">
+                    <div class="activity-log__time">{{notif.DateCreated.substr(11, 5)}}</div>
+                    <div class="activity-log__list">
+                        <div class="activity-log__text">
+                            <a>{{notif.NotificationTitle}}</a>
+                            <small>{{notif.NotificationBody}}</small>
+                        </div>
+                        <div class="activity-log__attrs">
+                            <span>{{notif.DateCreated.substr(0, 10)}}</span>
+                            <span class="hidden-xs">{{notif.DateCreated.substr(11, 5)}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

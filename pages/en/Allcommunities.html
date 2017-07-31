@@ -1,0 +1,124 @@
+        <div class="action-header fixed-top">
+            <div class="container">
+                <div class="action-header__item action-header__item--search">
+                    <form>
+                        <input type="text" ng-model="q" placeholder="filter communities"><!-- For desktop -->
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__title">
+                    <h2>All communities</h2>
+                </header>
+                <strong class="lead" ng-if="commresults.length === 0">No results found...</strong>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="listings-list listings-list--alt">
+                                <div class="listings-grid__item" ng-repeat="commun in allcommunities | filter:q as commresults">
+                                    <a href="" class="media" ng-click="redirectcommunity(commun.Community_ID)">
+                                        <div class="listings-grid__main pull-left">
+                                            <img ng-src="{{commun.CommunityImage}}" alt="">
+                                            <!--<div class="listings-grid__price">
+                                              <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="islogedin">Ask to join</button>
+                                              <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="!islogedin"  style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">Ask to join</button>
+                                            </div>-->
+                                        </div>
+
+
+                                        <div class="media-body">
+                                            <div class="listings-grid__body">
+                                            <h5>{{commun.CommunityName}}</h5>
+                                                 <small>{{commun.Members_NO}} members </small>
+                                                  <!--community rating-->
+                                                <!--<div class="jq-ry-rated-group jq-ry-group" style="width: 100%;"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="18px" height="18px" fill="#fcd461"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="18px" height="18px" fill="#fcd461" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="18px" height="18px" fill="#fcd461" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="18px" height="18px" fill="#fcd461" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="18px" height="18px" fill="#fcd461" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg></div>-->
+                                                 
+
+                                            </div>
+                                            <ul class="listings-grid__attrs">
+                                                <li><small>{{commun.Specification}}  </small></li>
+                                                <li class="pull-right" ng-repeat="commuser in commun.CommunityMembers"><img ng-src="{{commuser.UserImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                            </ul>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="col-md-4 visible-lg visible-md">
+                            <div class="card">
+                                <div class="card__header">
+                                    <h2>Suggested from your followers</h2>
+                                    <small>Etiam porta malesuada mollis</small>
+                                </div>
+
+                                <div class="groups-grid groups-grid--widget">
+                                    <a class="groups-grid__item" href="group-details.html">
+                                        <div class="groups-grid__img">
+                                            <img class="groups-grid__avatar" src="img/demo/people/1.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/2.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/3.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/4.jpg" alt="">
+                                        </div>
+
+                                        <div class="groups-grid__info">
+                                            <strong>Community name</strong>
+                                            <small class="text-muted">106 Contacts</small>
+                                        </div>
+                                    </a>
+
+                                    <a class="groups-grid__item" href="group-details.html">
+                                        <div class="groups-grid__img">
+                                            <div class="groups-grid__avatar avatar-char avatar-char--sm mdc-bg-light-blue-400">A</div>
+                                            <img class="groups-grid__avatar" src="img/demo/people/7.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/8.jpg" alt="">
+                                            <div class="groups-grid__avatar avatar-char avatar-char--sm mdc-bg-pink-400">D</div>
+                                        </div>
+
+                                        <div class="groups-grid__info">
+                                            <strong>Community name</strong>
+                                            <small class="text-muted">12 Contacts</small>
+                                        </div>
+                                    </a>
+
+                                    <a class="groups-grid__item" href="group-details.html">
+                                        <div class="groups-grid__img">
+                                            <img class="groups-grid__avatar" src="img/demo/people/5.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/6.jpg" alt="">
+                                            <div class="groups-grid__avatar avatar-char avatar-char--sm mdc-bg-orange-400">E</div>
+                                            <img class="groups-grid__avatar" src="img/demo/people/8.jpg" alt="">
+                                        </div>
+
+                                        <div class="groups-grid__info">
+                                            <strong>Community name</strong>
+                                            <small class="text-muted">42 Contacts</small>
+                                        </div>
+                                    </a>
+
+                                    <a class="groups-grid__item" href="group-details.html">
+                                        <div class="groups-grid__img">
+                                            <img class="groups-grid__avatar" src="img/demo/people/5.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/6.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/demo/people/8.jpg" alt="">
+                                            <img class="groups-grid__avatar" src="img/group_empty.jpg" alt="">
+                                        </div>
+
+                                        <div class="groups-grid__info">
+                                            <strong>Community name</strong>
+                                            <small class="text-muted">3 Contacts</small>
+                                        </div>
+                                    </a>
+
+                                    <div class="clearfix"></div>
+
+                                    <a href="groups.html" class="view-more">View All</a>
+                                </div>
+                            </div>
+                    </div>-->
+                </div>
+            </div>
+        </section>

@@ -1,0 +1,109 @@
+<section class="section" ng-controller="var_searchCtrl">
+    <div class="container">
+        <div ng-if="fullsearch">
+            <header class="section__title">
+                <h2>Search results</h2>
+            </header>
+            <strong class="lead" ng-if="allresults.length === 0">No results found...</strong>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="listings-list listings-list--alt">
+                            <div class="listings-grid__item" ng-repeat="res in allresults">
+                                <a href="" ng-click="openitem(res.ItemID)" class="media">
+                                    <div class="listings-grid__main pull-left">
+                                        <img ng-src={{res.Image}} alt="">
+                                        <div class="listings-grid__price">
+                                          <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="islogedin" ng-click="startchat()">Contact Owner</button>
+                                          <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="!islogedin"  style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">Contact Owner</button>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="listings-grid__body">
+                                        <h5>{{res.Name}}</h5>
+                                             <!--<small>Price: {{res.Price}} </small>-->
+                                             <small ng-if="res.Rent">For Rent</small>
+                                             <small ng-if="res.Exchange">For Exchange </small>
+                                        </div>
+                                        <ul class="listings-grid__attrs">
+                                            <li><small>{{res.Description}}  </small></li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!fullsearch">
+            <header class="section__title">
+                <h2>Items in &num;{{rentresults[0].Category_Name}}</h2>
+            </header>
+            <h3>Rent</h3>
+            <strong class="lead" ng-if="rentresults.length === 0">No results found...</strong>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="listings-list listings-list--alt">
+                            <div class="listings-grid__item" ng-repeat="res in rentresults">
+                                <a href="" ng-click="openitem(res.ItemID)" class="media">
+                                    <div class="listings-grid__main pull-left">
+                                        <img ng-src={{res.Image}} alt="">
+                                        <div class="listings-grid__price">
+                                          <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="islogedin" ng-click="startchat()">Contact Owner</button>
+                                          <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="!islogedin"  style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">Contact Owner</button>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="listings-grid__body">
+                                        <h5>{{res.Name}}</h5>
+                                             <!--<small>Price: {{res.Price}} </small>-->
+                                             <small ng-if="res.Rent">For Rent</small>
+                                             <small ng-if="res.Exchange">For Exchange </small>
+                                        </div>
+                                        <ul class="listings-grid__attrs">
+                                            <li><small>{{res.Description}}  </small></li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Exchange</h3>
+            <strong class="lead" ng-if="exchangeresults.length === 0">No results found...</strong>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="listings-list listings-list--alt">
+                            <div class="listings-grid__item" ng-repeat="res in exchangeresults">
+                                <a href="" ng-click="openitem(res.ItemID)" class="media">
+                                    <div class="listings-grid__main pull-left">
+                                        <img ng-src={{res.Image}} alt="">
+                                        <div class="listings-grid__price">
+                                          <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="islogedin" ng-click="startchat()">Contact Owner</button>
+                                          <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-if="!islogedin"  style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">Contact Owner</button>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="listings-grid__body">
+                                        <h5>{{res.Name}}</h5>
+                                             <!--<small>Price: {{res.Price}} </small>-->
+                                             <small ng-if="res.Rent">For Rent</small>
+                                             <small ng-if="res.Exchange">For Exchange </small>
+                                        </div>
+                                        <ul class="listings-grid__attrs">
+                                            <li><small>{{res.Description}}  </small></li>
+                                        </ul>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,207 @@
+<section class="section" ng-controller="var_profileCtrl">
+    <div class="container">
+        <header class="section__title text-left">
+            <h2>{{visitdetails.Name}}</h2>
+            <small>{{visitdetails.City}}, {{visitdetails.Area}}</small>
+        </header>
+        <div class="row">
+            <div class="col-md-4 list-group list-group--block contact-lists">
+                            <div class="list-group__header text-left">
+                                {{allusers.length}} قائمة مستخدميين
+                            </div>                  
+                            <div class="list-group__wrap" ng-repeat="user in allusers|limitTo:4">
+                                <a class="list-group-item media" href="" ng-click="redirectuser(user.Refrence_ID)" data-toggle="modal">
+                                    <div class="" style="display: inline-block">
+                                        <div class="avatar-char mdc-bg-amber-400" ng-if="user.ImageURL === null">{{user.Name.substring(0, 2)}}</div>
+                                        <img ng-src="{{user.ImageURL}}" class="list-group__img img-circle" width="50" height="50" alt="" ng-if="user.ImageURL !== null">
+                                    </div>
+                                     <div class="media-body list-group__text" style="display: inline-block">
+                                        <strong>{{user.Name}}</strong>
+                                        <div class="list-group__attrs">
+                                            <div>هذا الشهر: {{user.PointsOfMonth}} نقاط</div>
+                                            <div>الكل: {{user.TotalPoints}} نقاط</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <!--<div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right" ng-if="islogedin">
+                                            <li><a href="">Add to group</a></li>
+                                            <li><a href="">Add Contact</a></li>
+                                            <li><a href="">Delete</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu pull-right" ng-if="!islogedin" style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">
+                                            <li><p style="padding: 10px 20px">Add to group</p></li>
+                                            <li><p style="padding: 10px 20px">Add Contact</p></li>
+                                            <li><p style="padding: 10px 20px">Delete</p></li>
+                                        </ul>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="load-more" style="margin-bottom: 20px">
+                                <a href="" ng-click="boardpage()"><i class="zmdi zmdi-refresh-alt"></i> استكشف مستخدميين اكثر</a>
+                            </div>
+                        </div>
+            <div class="col-md-8">
+                <div class="card profile">
+                    <div class="profile__img" style="display: inline-block">
+                        <img ng-src="{{visitdetails.ImageURL}}" alt="">
+                    </div>
+                    <div class="profile__info" style="display: inline-block">
+                        <div ng-if="islogedin">
+                            <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" ng-if="!friendsalready && !requestfriend" ng-click="follow()">طلب المتابعة</button>
+                            <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" ng-if="friendsalready" ng-click="unfollow()">عدم المتابعة</button>
+                            <br><br>
+                            <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" ng-if="friendsalready" data-toggle="modal" data-target="#addfriends">الاضافة لمجتمع</button>
+                            
+                                <div class="actions list-group__actions" ng-if="!friendsalready && requestfriend">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" ng-if="!friendsalready && requestfriend" style="cursor: default" data-toggle="dropdown">طلب صداقة معلق</button>
+                                        <ul class="dropdown-menu pull-left">
+                                            <li><a href="" ng-click="acceptreq()">القبول</a></li>
+                                            <li><a href="" ng-click="declinereq()">الرفض</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            <a href="" class="label label-info" data-toggle="collapse" data-target="#reviwform" aria-expanded="false" aria-controls="collapseExample" ng-if="islogedin">تقييم المستخدم</a>
+                            <div class="collapse" id="reviwform">
+                                <div class="well">
+                                    <form>
+                                        <select ng-model="selectedreview">
+                                            <option value="" disabled ng-selected>التقييم</option>
+                                            <option ng-value="1">1</option>
+                                            <option ng-value="2">2</option>
+                                            <option ng-value="3">3</option>
+                                            <option ng-value="4">4</option>
+                                            <option ng-value="5">5</option>
+                                        </select>
+                                        <input type="text" placeholder="Feedback" ng-model="reportmsg">
+                                        <input class="btn btn-info" type="submit" ng-click="review()" data-toggle="collapse" data-target="#reviwform">
+                                    </form>
+                                </div>
+                            </div>
+                            <br>
+                            <a href="" class="label label-warning" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">تقييم المستخدم</a>
+                            <div class="collapse" id="collapseExample">
+                                <div class="well">
+                                    <form>
+                                        <input type="text" placeholder="رسالة التقييم" ng-model="reportmsg">
+                                        <input class="btn btn-warning" type="submit" ng-click="report()" data-toggle="collapse" data-target="#collapseExample">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile__review">
+                            <span class="rmd-rate" data-rate-value="0" data-rate-readonly="true"></span>
+                            <span>({{visitdetails.Review}} درجة التقييم)</span>
+                        </div>
+                        <ul class="rmd-contact-list">
+                            <li><i class="zmdi zmdi-calendar pull-left"></i>عضو منذ {{visitdetails.Creation_Date.substr(0, 10)}}</li>
+                            <!--<li><i class="zmdi zmdi-phone"></i>{{visitdetails.Mobile_Number}}</li>
+                            <li><i class="zmdi zmdi-email"></i>{{visitdetails.Email}}</li>-->
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <!--<div class="card__sub">
+                            <h4>About Alia Hosny</h4>
+                            <p>Pellentesque vitae quam quis tellus dignissim faucibus. Suspendisse mattis felis at faucibus lobortis. Sed sit amet tellus dolor. Fusce quis sollicitudin velit. Praesent gravida ullamcorper lectus et tincidunt. Phasellus lectus quam, porta pharetra feugiat in, auctor eget dolor.</p>
+                            <p>Vestibulum tincidunt imperdiet egestas. In in nunc vitae elit tincidunt tristique id eu justo. Quisque gravida maximus orci, vulputate pharetra mauris commodo at. Mauris eget fermentum ipsum, quis faucibus neque. Fusce eleifend sapien sit amet convallis rhoncus. Proin commodo lacinia lectus, et tempus turpis.</p>
+                        </div>
+                        <div class="card__sub">
+                            <h4>Education</h4>
+                            <p>FCI Mansoura university ,It </p>
+                        </div>-->
+                        <div class="card__sub">
+                            <h4>البيانات الخاصة</h4>
+                            <ul>
+                                <li>الاسم: <span>{{visitdetails.Name}}</span></li>
+                                <li>اسم المستخدم: <span>{{visitdetails.Username}}</span></li>
+                                <li>تاريخ الميلاد: <span>{{visitdetails.DOB.substr(0, 10)}}</span></li>
+                                <li>تاريخ انشاء الحساب: <span>{{visitdetails.Creation_Date.substr(0, 10)}}</span></li>
+                                <li>النقاط الكلية: <span>{{visitdetails.TotalPoints}}</span></li>
+                                <li>نقاط الشهر الجاري: <span>{{visitdetails.PointsOfMonth}}</span></li>
+                            </ul>
+                        </div>
+                        <div class="card__sub">
+                            <h4>بيانات التواصل</h4>
+                            <ul class="rmd-contact-list">
+                                <!--<li><i class="zmdi zmdi-phone"></i>{{visitdetails.Mobile_Number}}</li>
+                                <li><i class="zmdi zmdi-email"></i>{{visitdetails.Email}}</li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="col-md-4 rmd-sidebar-mobile" id="contact-user">
+                <form class="card" ng-submit="sendmessage(contactname, contactemail, contactnumber, contactmessage)">
+                    <div class="card__header">
+                        <h2>Contact {{visitdetails.Name}}</h2>
+                    </div>
+                    <div class="card__body m-t-10">
+                        <div class="form-group form-group--float">
+                            <input type="text" class="form-control" ng-model="contactname" placeholder="Name" required>
+                            <i class="form-group__bar"></i>
+                        </div>
+                        <div class="form-group form-group--float">
+                            <input type="email" class="form-control" ng-model="contactemail" placeholder="Email Address" required>
+                            <i class="form-group__bar"></i>
+                        </div>
+                        <div class="form-group form-group--float">
+                            <input type="text" class="form-control" ng-model="contactnumber" placeholder="Contact Number">
+                            <i class="form-group__bar"></i>
+                        </div>
+                        <div class="form-group form-group--float">
+                            <textarea class="form-control textarea-autoheight" ng-model="contactmessage" placeholder="Message" required></textarea>
+                            <i class="form-group__bar"></i>
+                        </div>
+                        <small class="text-muted">By sending us your information, you agree to solfa's Terms of Use &amp; Privacy Policy.</small>
+                    </div>
+                    <div class="card__footer">
+                    <p ng-if="messagesent">your message has been sent</p>
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-link" ng-click="resetcontactform()">Reset</button>
+                    </div>
+                </form>
+            </div>-->
+        </div>
+    </div>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="addfriends" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">اضافة الصديق لمجتمع</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group__wrap" ng-repeat="community in usrcommunities">
+                            <a class="list-group-item media">
+                                <div class="pull-left">
+                                    <img ng-src="{{community.Community_Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                </div>
+                                <div class="media-body list-group__text">
+                                    <strong>{{community.Community_Name}}</strong>
+                                </div>
+                            </a>
+                            <div class="actions list-group__actions">
+                                <div class="dropdown">
+                                    <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="" ng-click="addtocommunity(community.Community_ID)">اضافة الصديق لمجتمع</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--[if IE 9 ]><html lang="en" class="ie9"><![endif]-->
+
+
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>سلفة</title>
+
+        <!-- Vendors -->
+
+        <!-- Material design colors -->
+        <link href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+
+        <!-- CSS animations -->
+        <link rel="stylesheet" href="vendors/bower_components/animate.css/animate.min.css">
+
+        <!-- Select2 - Custom Selects -->
+        <link rel="stylesheet" href="vendors/bower_components/select2/dist/css/select2.min.css">
+
+        <!-- rateYo - Ratings -->
+        <link rel="stylesheet" href="vendors/bower_components/rateYo/src/jquery.rateyo.css">
+
+        <!-- Slick Carousel -->
+        <link rel="stylesheet" href="vendors/bower_components/slick-carousel/slick/slick.css">
+
+        <!-- NoUiSlider - Input Slider -->
+        <link rel="stylesheet" href="vendors/bower_components/nouislider/distribute/nouislider.min.css">
+
+        <!-- Light Gallery -->
+        <link rel="stylesheet" href="vendors/bower_components/lightgallery/dist/css/lightgallery.min.css">
+
+        <!-- Site -->
+        <link rel="stylesheet" href="css/app_1.min.css">
+        <link rel="stylesheet" href="css/app_2.min.css">
+        <link rel="stylesheet" href="style.css">
+        <!-- Page Loader JS -->
+        <script src="js/page-loader.min.js" async></script>
+    <!--<script src='../../../google_analytics_auto.js'></script>-->
+    <script>
+        var apiurl = "http://yaken.cloudapp.net/solfa/api/",
+        language = "AR",
+        lang = "ar";
+    </script>
+    </head>
+
+    <body ng-app="myApp" dir="rtl">
+        <!-- Start page loader -->
+       <div id="page-loader">
+           <img src="img/logo.png" class="ImagePreloader">
+           <div class="page-loader__spinner"></div>
+       </div>
+       <!-- End page loader -->
+
+         <header id="header" ng-controller="generalheadCtrl">
+            <div class="header__top">
+                <div class="container">
+                    <ul class="top-nav" ng-if="!islogedin">
+                        <li class="dropdown top-nav__guest pull-right">
+                            <a data-toggle="dropdown" href="">التسجيل</a>
+
+                            <form class="dropdown-menu stop-propagate" ng-submit="reg(regname, regemail, regpass, reregpass)">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="الاسم" ng-model="regname" required>
+                                    <i class="form-group__bar"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" placeholder="البريد الاليكتروني" ng-model="regemail" required>
+                                    <i class="form-group__bar"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="كلمة السر" ng-model="regpass" required>
+                                    <i class="form-group__bar"></i>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="اعادة كلمة السر" ng-model="reregpass" required>
+                                    <i class="form-group__bar"></i>
+                                </div>
+                                <p class="pull-right"><input type="checkbox" ng-model="agreeterms"><small>هل توافق على <a href="" data-toggle="modal" data-target="#terms">الشروط و الاحكام؟</a></small></p>
+                                
+                                
+                                <div ng-show="regpass !== reregpass" style="color: #f00">كلمة السر يجب ان تطابق اعادتها</div>
+                                <span ng-if="errorreg" style="color: #f00">{{errormsg}}</span>
+                                <button ng-show="regpass !== reregpass || !agreeterms" class="btn btn-primary btn-block m-t-10 m-b-10 disabled">التسجيل</button>
+                                <button type="submit" ng-show="regpass === reregpass && agreeterms" class="btn btn-primary btn-block m-t-10 m-b-10">التسجيل</button>
+                                
+                                <div class="top-nav__auth">
+                                    <span>او</span>
+
+                                    <div>التسجيل باستخدام<br>
+                                    <span ng-if="facebookerrorreg" style="color: #f00">{{facebookerrormsg}}</span></div>
+                                    <button class="btn btn-primary btn-block m-t-10 m-b-10" ng-click="FBReg()"><i class="zmdi zmdi-facebook"></i></button>
+                                    
+                                </div>
+
+                            </form>
+                        </li>
+
+                        <li class="dropdown top-nav__guest pull-right">
+                            <a data-toggle="dropdown" href="" data-rmd-action="switch-login">الدخول</a>
+
+                            <div class="dropdown-menu">
+                                <div class="tab-content">
+                                    <form class="tab-pane active in fade" id="top-nav-login" ng-submit="loginup(loginuname, loginupass, rememberme)">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="البريد الاليكتروني" ng-model="loginuname" required>
+                                            <i class="form-group__bar"></i>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="كلمة السر" ng-model="loginupass" required>
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <input type="checkbox" ng-model="rememberme" class="pull-right">&nbsp;<span class="pull-right"> &nbsp;تذكرني&nbsp;</span>
+                                        <span ng-if="errorlogin" style="color: #f00">{{errormsg}}</span>
+                                        <button type="submit" class="btn btn-primary btn-block m-t-10 m-b-10">الدخول</button>
+
+                                        <div class="text-center">
+                                            <a href="" data-target="#top-nav-forgot-password" data-toggle="tab"><small>نسيت كلمة السر؟</small></a>
+                                        </div>
+
+                                        <div class="top-nav__auth">
+                                            <span>او</span>
+
+                                            <div>الدخول باستخدام</div>
+
+                                            <button type="submit" class="btn btn-primary btn-block m-t-10 m-b-10" ng-click="FBLogin()"><i class="zmdi zmdi-facebook"></i></button>
+                                        </div>
+                                    </form>
+
+                                    <form class="tab-pane fade forgot-password" id="top-nav-forgot-password" ng-submit="forgetpassword(forgetpassemail)">
+                                        <a href="" data-target="#top-nav-login" class="top-nav__back" data-toggle="tab"></a>
+
+                                        <p>مع طلبك سوف يتم ارسال كود تعريفي لبريدك الاليكتروني</p>
+                                        
+                                        <div class="form-group">
+                                            <input type="email" required ng-model="forgetpassemail" class="form-control" placeholder="البريد الاليكتروني">
+                                            <i class="form-group__bar"></i>
+                                        </div>
+
+                                        <p ng-if="forgetpasserror" style="color: #f00">{{forgetpassworderrormsg}}</p>
+                                        <button type="submit" class="btn btn-warning btn-block">Reset Password</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="pull-left top-nav__icon">
+                            <a href="index.html"> English <i class="zmdi zmdi-globe"></i> </a>
+                        </li>
+                    </ul>
+                    <ul class="top-nav" ng-if="islogedin">
+                        <li class="dropdown pull-right">
+                            <a href="" data-toggle="dropdown">مرحبا {{username}}&nbsp;!</a>
+
+                            <ul class="dropdown-menu">
+                                <li><a href="" ng-click="profilepage()">الصفحة الشخصية</a></li>
+                                <li><a href="" ng-click="editprofilepage()">تعديل الحساب الخاص</a></li>
+                                <li><a href="" ng-click="logout()">الخروج</a></li>
+                            </ul>
+                        </li>
+                        <li class="top-nav__icon pull-right">
+                            <a href="" ng-click="notifpage()">
+                                <i class="zmdi zmdi-notifications" ng-if="notifications[0].IsSeen !== false"></i>
+                                <i class="zmdi zmdi-notifications-active" style="color: #f00" ng-if="notifications[0].IsSeen === false"></i>
+                            </a>
+                        </li>
+
+                        <li class="pull-left top-nav__icon">
+                            <a href="index.html"> English <i class="zmdi zmdi-globe"></i> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="header__main action-header2">
+                <div class="container">
+
+                    <a class="logo col-xs-4 " href="index-ar.html">
+
+                        <div class="logo__text">
+                            <img src="img/logo.png">
+                        </div>
+                    </a>
+
+                    <div class="navigation-trigger visible-xs visible-sm" data-rmd-action="block-open" data-rmd-target=".navigation">
+                        <i class="zmdi zmdi-menu"></i>
+                    </div>
+                    <div class="navigation-trigger visible-xs visible-sm" style="margin-right: 10px" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">
+                        <i class="zmdi zmdi-search"></i>
+                    </div>
+                    <div class="collapse pull-down" id="searchbar" style="background-color: #ccc; border-radius: 10px; padding: 10px; margin-top: 70px">
+                        <form ng-submit="search(search_type, selectcat, keyword)">
+                            <div class="search">
+                                <div class="search__type">
+                                    <select class="yellow_button" style="padding: 5px; width: 100%;" ng-model="search_type" required>
+                                        <option value="" disabled ng-selected style="color: #fff; font-size: 13px;color: #3e3e3e;font-weight: 500;text-transform: uppercase">البحث عن</option>
+                                        <option ng-value="false" style="font-size: 13px;color: #3e3e3e;font-weight: 500;text-transform: uppercase">الاقتراض</option>
+                                        <option ng-value="true" style="font-size: 13px;color: #3e3e3e;font-weight: 500;text-transform: uppercase">التبادل</option>
+                                    </select>
+                                </div>
+                                <div class="search__body">
+                                    <input type="text" class="search__input" placeholder="ما الذي تبحث عنه؟" data-rmd-action="advanced-search-open" ng-model="keyword" style="margin-left:25px">
+                                    <div class="search__advanced">
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>نوع الفئة</label>
+
+                                                <select class="select2" ng-model="selectcat">
+                                                    <option value="" disabled ng-selected>اختيار الفئة</option>
+                                                    <option ng-value=cat.Category_ID ng-repeat="cat in allCategories">{{cat.Category_Name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 m-t-10">
+                                            <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">البحث</button>
+                                            <button class="btn btn-link" data-rmd-action="advanced-search-close">اغلاق</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <ul class="navigation col-xs-5">
+                        <li class="visible-xs visible-sm"><a class="navigation__close" data-rmd-action="navigation-close" href=""><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+
+                        <li>
+                            <a href="" ng-click="communitiespage()">المجتمعات</a>
+                        </li>
+                        <li><a href="" ng-click="aboutpage()">نبذة عن سلفة</a></li>
+                        <li >
+                            <a href="" ng-click="blogspage()">المقالات</a>
+                        </li>
+
+
+                        <li >
+                             <a href="" data-toggle="collapse" data-target="#sharelist" aria-expanded="false" aria-controls="sharelist" ng-if="islogedin">دعوة الاصدقاء</a>
+                             <a href="" data-toggle="collapse" data-target="#shareafterlogin" aria-expanded="false" aria-controls="shareafterlogin" ng-if="!islogedin">دعوة الاصدقاء</a>
+
+                            <div class="collapse pull-down" id="sharelist" style="background-color: #ccc; border-radius: 10px; padding: 30px 13px">
+                                <i class="zmdi zmdi-email" data-toggle="collapse" data-target="#shareemail" aria-expanded="false" aria-controls="shareemail" style="font-size: 2em; cursor: pointer; color: #555"></i>ارسال دعوة
+                                <div class="collapse" id="shareemail">
+                                    <div class="well">
+                                        <div class="card text-center">
+                                            <form style="padding: 15px" ng-submit="invitation(invitemail)">
+                                                <label>ادعو صديق عن طريق البريد الاليكتروني</label><br>
+                                                <input type="email" placeholder="البريد الاليكتروني" ng-model="invitemail">
+                                                <input type="submit" value="الارسال">
+                                                <p ng-if="requestsent">تم ارسال طلبك بنجاح</p>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br><br>
+                                <i class="zmdi zmdi-search" data-toggle="modal" data-target="#findfriends" style="font-size: 2em; cursor: pointer; color: #555"></i>البحث عن المستخدميين
+                                <br><br>
+                                <i class="zmdi zmdi-facebook" data-toggle="collapse" data-target="#sharefacebook" aria-expanded="false" aria-controls="sharefacebook" style="font-size: 2em; cursor: pointer; color: #555"></i>المشاركة لل فيسبوك
+                                <div class="collapse" id="sharefacebook">
+                                    <div class="well">
+                                        <div class="text-center" style="padding: 20px">
+                                            <p>المشاركة على ال فيسبوك الرابط الخاص بك</p>
+                                            <iframe ng-src="{{sharelink}}" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="collapse pull-down" id="shareafterlogin" style="background-color: #ccc; border-radius: 10px; padding: 30px 13px">
+                                 <p>يجب ان تسجل دخول اولا لتدعو اصدقائك.</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- Find friends Modal -->
+            <div class="modal fade" id="findfriends" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">البحث عن الاصدقاء</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="lead">ابحث عن اصدقائك و ان لم تجدهم يمكنك ارسال دعوة عن طريق ال فيسبوك او البريد الاليكتروني</p>
+                            <div class="well">
+                                <form ng-submit="searchusersbyarea(selectcity)">
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <select class="form-control" ng-model="selectcountry" ng-change="getcity()" required>
+                                                <option value="" disabled ng-selecte>المحافظة</option>
+                                                <option ng-repeat="country in allcountries" ng-value=country.CityID>{{country.Cities}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <select class="form-control" ng-model="selectcity" required>
+                                                <option value="" disabled ng-selecte>المنطقة</option>
+                                                <option ng-repeat="city in allcities" ng-value=city.AreaID>{{city.Area}}</option>
+                                            </select>
+                                        </div>
+                                        <input type="submit" class="col-sm-4">
+                                    </div>
+                                </form>
+                                <div ng-if="resultsfound">
+                                    <p ng-if="userresults.length === 0">ا يوجد نتائج</p>
+                                    <ul>
+                                        <li ng-repeat="result in userresults"><a href="" ng-click="redirectuser(result.Refrence_ID)">{{result.Name}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- terms Modal -->
+                <div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>الشروط و الاحكام</h4>
+                          <p style="color: #000">الشروط </p>
+                          <p style="color: #000"> الاحكام</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- regestration confirmation Modal -->
+                <div class="modal fade" id="regconf" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>تاكيد التسجيل</h4>
+                          <p style="color: #000">تم التسجيل بنجاح من فضلك قم بزيارة بريدك الااليكتروني و اضغط على الرابط المرسل لك</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                        <!-- reset password Modal -->
+                        <div class="modal fade" id="resetpassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h4>اعادة ضبط كلمة السر</h4>
+                                        <p style="color: #000">وفقا لطلبك لاعادة ضبط كلمة السر تم ارسال كود تعريفي لبريدك الاليكتروني احصل علية لتكمل اعادة ضبط كلمة سر جديدة</p>
+                                        <form class="card__body" ng-submit="resetpassword(resetemail, resetpass, resetrepass, resetcode)">
+                                            <div>
+                                                <div>
+                                                    <div class="form-group form-group--float">
+                                                        <input type="email" required ng-model="resetemail" class="form-control" style="color: #000" placeholder="البريد الاليكتروني">
+                                                        <i class="form-group__bar"></i>
+                                                    </div>
+                                                    <div class="form-group form-group--float">
+                                                        <input type="password" required ng-model="resetpass" class="form-control" style="color: #000" placeholder="كلمة السر الجديدة">
+                                                        <i class="form-group__bar"></i>
+                                                    </div>
+                                                    <div class="form-group form-group--float">
+                                                        <input type="password" required ng-model="resetrepass" class="form-control" style="color: #000" placeholder="اعد ادخال كلمة السر الجديدة">
+                                                        <i class="form-group__bar"></i>
+                                                    </div>
+                                                    <div class="form-group form-group--float">
+                                                        <input type="text" required ng-model="resetcode" class="form-control" style="color: #000" placeholder="كود التعريف">
+                                                        <i class="form-group__bar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <buttontype: type="submit" class="btn btn-default btn-sm m-t-15 mdc-text-orange-700">اعد ضبط كلمة السر</button>
+                                        </form>
+                                        <p ng-if="resetpasserror">{{resetpassworderrormsg}}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+        </header>  
+
+        <div ng-view></div>
+        
+        
+        <footer id="footer" ng-controller="generalfootCtrl">
+            <div class="container hidden-xs">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="footer__block">
+                            <a class="logo clearfix" href="#">
+                                <div class="logo__text">
+                                   <img src="img/logo.png">
+                                </div>
+                            </a>
+
+                            <address class="m-t-20 m-b-20 f-14">
+                                44-46 المعادي,
+                                القاهرة
+                            </address>
+
+                            <div class="f-20">0062-345678910</div>
+                            <div class="f-14 m-t-5">hello@Support.com / info@Yackeen.com</div>
+
+                            <div class="f-20 m-t-20">
+                                <span>تابعنا على:&nbsp;&nbsp;</span>
+                                <a href="" class="m-r-10"><i class="zmdi zmdi-facebook"></i></a>
+                                <a href="" class="m-r-10"><i class="zmdi zmdi-twitter"></i></a>
+                                <a href="" class="m-r-10"><i class="zmdi zmdi-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="footer__block footer__block--blog">
+                            <div class="footer__title">احدث التعليقات على مقالاتنا</div>
+                            <div ng-repeat="recentblog in recentblogs">
+                                <a class="media" href="" ng-click="redirectblog(recentblog.BlogID)" data-toggle="modal">
+                                    <div class="pull-left">
+                                        <img ng-src="{{recentblog.BlogTitle}}" class="list-group__img img-circle" width="50" height="50" alt="">
+                                    </div>
+                                     <div class="media-body list-group__text">
+                                        <p style="margin-bottom: 0px">{{recentblog.Comment}}</p>
+                                        <p>{{recentblog.CommentDate.substr(0, 10)}} {{recentblog.CommentDate.substr(11, 5)}}</p>
+                                    </div>
+                                    <br>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <div class="container">
+                    <span class="footer__copyright"><a href="http://www.Yackeen.com">&copy; Y solution</a></span>
+
+                    <a href="" ng-click="aboutpage()">نبذة عن سلفة</a>
+                    <a href="" data-toggle="modal" data-target="#terms">الشروط &amp; الاحكام</a>
+                    <a href="">وثيقة الخصوصية</a>
+                    <a href="" data-toggle="modal" data-target="#feedback">تواصل معنا</a>
+                    <a href="" data-toggle="modal" data-target="#Disclaimer">التنصل</a>
+                </div>
+                <!-- feedback Modal -->
+                <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>سوف نكن سعداء اذا تواصلت معنا</h4>
+                            <form>
+                                <input type="text" placeholder="Email" style="margin: 10px; padding: 5px; color: #000; width:80%" ng-model="feedemail">
+                                <br>
+                                <textarea type="text" placeholder="Feedback" style="margin: 10px; padding: 5px; color: #000; width:80%" ng-model="feedtext"></textarea>
+                            </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                        <button type="button" class="btn btn-primary" ng-click="sendfeedback()">الارسال</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Disclaimer Modal -->
+                <div class="modal fade" id="Disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>التنصل</h4>
+                          <p style="color: #000">الموقع غير مسئول</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- terms Modal -->
+                <div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                          <h4>الشروط و الاحكام</h4>
+                          <p style="color: #000">الشروط</p>
+                          <p style="color: #000">الاحكام</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="footer__to-top" data-rmd-action="scroll-to" data-rmd-target="html">
+                    <i class="zmdi zmdi-chevron-up"></i>
+                </div>
+            </div>
+        </footer>
+        <!-- Older IE warning message -->
+        <!--[if lt IE 9]>
+            <div class="ie-warning">
+                <h1>Warning!!</h1>
+                <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
+                <div class="ie-warning__inner">
+                    <ul class="ie-warning__download">
+                        <li>
+                            <a href="http://www.google.com/chrome/">
+                                <img src="img/browsers/chrome.png" alt="">
+                                <div>Chrome</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.mozilla.org/en-US/firefox/new/">
+                                <img src="img/browsers/firefox.png" alt="">
+                                <div>Firefox</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.opera.com">
+                                <img src="img/browsers/opera.png" alt="">
+                                <div>Opera</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.apple.com/safari/">
+                                <img src="img/browsers/safari.png" alt="">
+                                <div>Safari</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                                <img src="img/browsers/ie.png" alt="">
+                                <div>IE (New)</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <p>Sorry for the inconvenience!</p>
+            </div>
+        <![endif]-->
+        <!-- Javascript -->
+        <!-- jQuery -->
+        <script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- Waves button ripple effects -->
+        <script src="vendors/bower_components/Waves/dist/waves.min.js"></script>
+        <!-- Select 2 - Custom Selects -->
+        <script src="vendors/bower_components/select2/dist/js/select2.full.min.js"></script>
+        <!-- Slick Carousel - Custom Alerts -->
+        <script src="vendors/bower_components/slick-carousel/slick/slick.min.js"></script>
+        <!-- NoUiSlider -->
+        <script src="vendors/bower_components/nouislider/distribute/nouislider.min.js"></script>
+        <!-- Autosize - Textarea -->
+        <script src="vendors/bower_components/autosize/dist/autosize.min.js"></script>
+        <!-- rateYo - Ratings -->
+        <script src="vendors/bower_components/rateYo/src/jquery.rateyo.js"></script>
+        <!-- jsSocials - Social link sharing -->
+        <script src="vendors/bower_components/jssocials/dist/jssocials.min.js"></script>
+        <!-- IE9 Placeholder -->
+        <!--[if IE 9 ]>
+            <script src="vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+        <![endif]-->
+        <!-- Site functions and actions -->
+        <script src="js/app.min.js"></script>
+        <!-- Demo only -->
+        <script src="js/demo/demo.js"></script>
+        <!-- Main -->
+        <script src="js/main.js"></script>
+        <!-- Angular and controller -->
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="js/angular-cookies.min.js"></script>
+        <script src="js/plugins.js"></script>
+    </body>
+
+
+</html>

@@ -1,0 +1,93 @@
+<section class="section" ng-controller="var_confirmCtrl">
+    <div class="container">
+        <div style="min-height: 300px">
+            Welcome to SOLFA. Go to <a href="" ng-click="homepage()">Home Page</a>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="completedata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel">Complete Your Information</h3>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="editprofile">
+                                <h2>Edit Your Profile</h2>
+                                <div class="card" ng-if="!readyforimage">
+                                    <form class="card__body" ng-submit="editprofile(userdetails.Name, userdetails.Mobile_Number, userdetails.DOB, selectcity)">
+                                        <div class="form-group form-group--float form-group--float-center">
+                                            <input type="text" class="form-control text-center" ng-model="userdetails.Name" placeholder="Your Name">
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <div class="form-group form-group--float form-group--float-center">
+                                            <input type="text" class="form-control text-center" ng-model="userdetails.Mobile_Number" placeholder="Mobile Number">
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <div class="form-group form-group--float form-group--float-center">
+                                            <input type="date" class="form-control text-center" ng-model="userdetails.DOB" placeholder="Birth Date" requried>
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="selectcountry" ng-change="getcity(selectcountry)" requried>
+                                                <option value="" disabled ng-selecte>Governorate</option>
+                                                <option ng-repeat="country in editallcountries" ng-value=country.CityID>{{country.Cities}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="selectcity" requried>
+                                                <option value="" disabled ng-selecte>Area</option>
+                                                <option ng-repeat="city in editallcities" ng-value=city.AreaID>{{city.Area}}</option>
+                                            </select>
+                                        </div>
+                                        <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+                                    </form>
+                                </div>
+                                <div class="card" ng-if="readyforimage">
+                                    <div class="card__header">
+                                        <h2>Your Image</h2>
+                                    </div>
+
+                                    <form class="card__body" ng-submit="editprofileimage()">
+                                         <div class="new-contact__img">
+                                            <img src="img/user_empty.png" alt="">
+                                             <input type="file" id="myFileField" name="myFile" />
+                                        </div>
+                                        <button class="btn btn--circle btn-primary submit-property__button" type="submit" data-target="#addnewitem" aria-controls="addnewitem" role="tab" data-toggle="tab"><i class="zmdi zmdi-check"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="inviteemail">
+                                <h2>Invite Friends</h2>
+                                <div class="card text-center">
+                                    <form style="padding: 15px" ng-submit="invitation()">
+                                        <label>You can send invitation to friends outside SOLFA</label><br>
+                                        <input type="email" placeholder="E-MAIL" ng-model="invitemail">
+                                        <input type="submit" value="ADD">
+                                        <p ng-if="requestsent">Your request have been sent</p>
+                                    </form>
+                                </div>
+                                <a href="" type="submit" class="btn btn--circle btn-primary submit-property__button" data-target="#addnewitem" aria-controls="addnewitem" role="tab" data-toggle="tab">
+                                    <i class="zmdi zmdi-check"></i>
+                                </a>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="addnewitem">
+                                <h2>Add item</h2>
+                                Now You Can Start Adding Items <a href="" ng-click="redirectadditem()">Add Item</a>
+                                <a href="" type="submit" class="btn btn--circle btn-primary submit-property__button"  data-dismiss="modal">
+                                    <i class="zmdi zmdi-check"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+

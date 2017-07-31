@@ -1,0 +1,184 @@
+        <div class="action-header">
+            <div class="container">
+                <div class="action-header__item action-header__item--search">
+                    <form>
+                        <input type="text" ng-model="q" placeholder="Filter Blogs....">
+                    </form>
+                </div>
+
+                <!-- <div class="action-header__item action-header__item--tags hidden-xs">
+                    <a href="#">#New York</a>
+                    <a href="#">#Condo for rent</a>
+                    <a href="#">#Lendors</a>
+                    <a href="#" class="hidden-sm">#Mortgage</a>
+                    <a href="#" class="hidden-sm">#Sell Property</a>
+                </div> -->
+            </div>
+        </div>
+
+        <section class="section">
+            <div class="container">
+                <header class="section__title">
+                    <h2>Solfa Blogs</h2>
+                    <!--<small>Vestibulum id ligula porta felis euismod semper</small>-->
+                </header>
+
+                <strong class="lead" ng-if="BlogsList.length === 0">No results found...</strong>
+                <div class="row">
+                    <div class="col-md-8 col-sm-7">
+                        <article class="card" ng-repeat="blog in allblogs | filter:q as BlogsList">
+                            <a class="card__img" href="blog-details.html">
+                                <img ng-src="{{blog.BlogImage}}" alt="" style="max-width:500px; max-height:500px">
+                            </a>
+                            <div class="card__header">
+                                <h2>{{blog.Title}}</h2>
+                                <small>by {{blog.Writer_Name}} on {{blog.Creation_Date.substr(0, 10)}}</small>
+                            </div>
+                            <div class="card__body">
+                                {{blog.Body.substr(0, 100)}}
+
+                                <div class="blog-more">
+                                    <a href="" ng-click="redirectblog(blog.Blog_ID)" style="color: #00f">Read More...</a>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!--<nav class="text-center">
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <i class="zmdi zmdi-chevron-left"></i>
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <i class="zmdi zmdi-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>-->
+                    </div>
+
+                    <aside class="col-md-4 col-sm-5 hidden-xs">
+                        <!--email subscription-->
+                        <!--<div class="card subscribe mdc-bg-orange-300">
+                            <div class="subscribe__icon">
+                                <i class="zmdi zmdi-email"></i>
+                            </div>
+
+                            <h2>Subscribe for Newsletters</h2>
+                            <small>Curabitur blandit tempus porttitor adipiscing maecenas faucibus mollis interdum</small>
+
+                            <form>
+                                <div class="form-group form-group--light form-group--float">
+                                    <input type="text" class="form-control text-center" placeholder="Email Address">
+                                    <i class="form-group__bar"></i>
+                                </div>
+
+                                <button class="btn btn--circle">
+                                    <i class="zmdi zmdi-check mdc-text-orange-400"></i>
+                                </button>
+                            </form>
+                        </div>-->
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h2>Picked blogs</h2>
+                            </div>
+
+                            <div class="list-group">
+                                <div ng-repeat="picked in pickedblogs|limitTo:4">
+                                    <a href="" class="list-group-item media" ng-click="redirectblog(picked.Blog_ID)">
+                                        <!--<div class="pull-left">
+                                            <img src="img/demo/listing/thumbs/2.jpg" alt="" class="list-group__img" width="65">
+                                        </div>-->
+                                        <div class="media-body list-group__text">
+                                            <strong>{{picked.Title}}</strong>
+                                            <small>{{picked.Body.substr(0, 10)}}...</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card tags-list">
+                            <div class="card__header">
+                                <h2>Categories</h2>
+                                <small>These are some of our categories</small>
+                            </div>
+                            <div class="card__body">
+                                <a href="" ng-click="redirect(categ.Category_ID)" class="tags-list__item" ng-repeat="categ in allCategories|limitTo:7">#{{categ.Category_Name}}</a>
+                            <button class="btn btn-default" ng-click="categiriespage()">See All</button>
+                            </div>
+                        </div>
+
+                        <!--<div class="card">
+                            <div class="card__header">
+                                <h2>Recent comments</h2>
+                                <small>Etiam porta sem malesuada magna mollis</small>
+                            </div>
+                            <div class="list-group">
+                                <a class="list-group-item media" href="#">
+                                    <div class="pull-left">
+                                        <img src="img/demo/people/1.jpg" alt="" class="list-group__img img-circle" width="45" height="45">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Sarah Hamza</strong>
+                                        <small class="list-group__text">Nullam quis risus eget urna mollis ornare vel eu leo</small>
+                                    </div>
+                                </a>
+
+                                <a class="list-group-item media" href="#">
+                                    <div class="pull-left">
+                                        <img src="img/demo/people/2.jpg" alt="" class="list-group__img img-circle" width="45" height="45">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Nirmeen Mohammed</strong>
+                                        <small class="list-group__text">Vestibulum id ligula porta felis euismod semper</small>
+                                    </div>
+                                </a>
+
+                                <a class="list-group-item media" href="#">
+                                    <div class="pull-left">
+                                        <img src="img/demo/people/3.jpg" alt="" class="list-group__img img-circle" width="45" height="45">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Aliaa Hosny</strong>
+                                        <small class="list-group__text">Cras justo odio, dapibus ac facilisis</small>
+                                    </div>
+                                </a>
+
+                                <a class="list-group-item media" href="#">
+                                    <div class="pull-left">
+                                        <img src="img/demo/people/4.jpg" alt="" class="list-group__img img-circle" width="45" height="45">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Ali Ahmed</strong>
+                                        <small class="list-group__text">Integer posuere erat a ante venenatis dapibus posuere velit aliquet</small>
+                                    </div>
+                                </a>
+
+                                <a class="list-group-item media" href="#">
+                                    <div class="pull-left">
+                                        <img src="img/demo/people/5.jpg" alt="" class="list-group__img img-circle" width="45" height="45">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong> Ahmed Mohamed</strong>
+                                        <small class="list-group__text">Donec sed odio dui</small>
+                                    </div>
+                                </a>
+
+                                <div class="p-10"></div>
+                            </div>
+                        </div>-->
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+      

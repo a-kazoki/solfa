@@ -1,0 +1,93 @@
+<section class="section" ng-controller="var_confirmCtrl">
+    <div class="container">
+        <div style="min-height: 300px">
+            مرحبا في سلفة. الذهاب الى <a href="" ng-click="homepage()">الصفحة الرئيسية</a>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="completedata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel" style="float: right">استكمل بياناتك</h3>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="editprofile">
+                                <h2 style="float: right">تعديل الحساب الخاص </h2>
+                                <div class="card" ng-if="!readyforimage">
+                                    <form class="card__body" ng-submit="editprofile(userdetails.Name, userdetails.Mobile_Number, userdetails.DOB, selectcity)">
+                                        <div class="form-group form-group--float form-group--float-center">
+                                            <input type="text" class="form-control text-center" ng-model="userdetails.Name" placeholder="الاسم">
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <div class="form-group form-group--float form-group--float-center">
+                                            <input type="text" class="form-control text-center" ng-model="userdetails.Mobile_Number" placeholder="رقم الهاتف">
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <div class="form-group form-group--float form-group--float-center">
+                                            <input type="date" class="form-control text-center" ng-model="userdetails.DOB" placeholder="تاريخ الميلاد" requried>
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="selectcountry" ng-change="getcity(selectcountry)" requried>
+                                                <option value="" disabled ng-selecte>المحافظة</option>
+                                                <option ng-repeat="country in editallcountries" ng-value=country.CityID>{{country.Cities}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" ng-model="selectcity" requried>
+                                                <option value="" disabled ng-selecte>المنطقة</option>
+                                                <option ng-repeat="city in editallcities" ng-value=city.AreaID>{{city.Area}}</option>
+                                            </select>
+                                        </div>
+                                        <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+                                    </form>
+                                </div>
+                                <div class="card" ng-if="readyforimage">
+                                    <div class="card__header">
+                                        <h2 style="float: right">الصورة الشخصية</h2>
+                                    </div>
+
+                                    <form class="card__body" ng-submit="editprofileimage()">
+                                         <div class="new-contact__img">
+                                            <img src="img/user_empty.png" alt="">
+                                             <input type="file" id="myFileField" name="myFile" />
+                                        </div>
+                                        <button class="btn btn--circle btn-primary submit-property__button" type="submit" data-target="#addnewitem" aria-controls="addnewitem" role="tab" data-toggle="tab"><i class="zmdi zmdi-check"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="inviteemail">
+                                <h2 style="float: right">دعوة الاصدقاء</h2>
+                                <div class="card text-center">
+                                    <form style="padding: 15px" ng-submit="invitation()">
+                                        <label>يمكنك ارسال دعوة لاصدقائك خارج سلفة</label><br>
+                                        <input type="email" placeholder="البريد الاليكتروني" ng-model="invitemail">
+                                        <input type="submit" value="ارسال">
+                                        <p ng-if="requestsent">تم الارسال بنجاح</p>
+                                    </form>
+                                </div>
+                                <a href="" type="submit" class="btn btn--circle btn-primary submit-property__button" data-target="#addnewitem" aria-controls="addnewitem" role="tab" data-toggle="tab">
+                                    <i class="zmdi zmdi-check"></i>
+                                </a>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="addnewitem" style="float: right">
+                                <h2>اضافة منتج</h2>
+                                الان يمكنك اضافة المنتجات <a href="" ng-click="redirectadditem()">اضافة منتج</a>
+                                <a href="" type="submit" class="btn btn--circle btn-primary submit-property__button"  data-dismiss="modal">
+                                    <i class="zmdi zmdi-check"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+

@@ -1,0 +1,293 @@
+
+
+        <section class="section" ng-controller="var_itemCtrl">
+            <div class="container">
+                <header class="section__title section__title-alt">
+                    <h2>{{itemdetails.Name}}</h2>
+                    <small ng-if="!itemdetails.IsAddressHidden">{{ownerdetails.City}}, {{ownerdetails.Area}}</small>
+
+                    <div class="actions actions--section">
+                        <div ng-if="!isownerview">
+                            <span ng-if="!isalreadywished" ng-click="addwish()" style="cursor: pointer"><i class="zmdi zmdi-favorite-outline zmdi-hc-lg"></i></span>
+                            <span ng-if="isalreadywished" ng-click="removewish()" style="cursor: pointer"><i class="zmdi zmdi-favorite zmdi-hc-lg"></i></span>
+                        </div>
+                        <div class="dropdown">
+                            <!--<a href="" data-toggle="dropdown"><i class="zmdi zmdi-share"></i></a>-->
+                            <iframe ng-src="{{sharelink}}" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" ng-click="getsharepoints()"></iframe>
+                            <!--<div class="dropdown-menu pull-right rmd-share">
+                                <div></div>
+                            </div>-->
+                        </div>
+                    </div>
+                </header>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="detail-media">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active light-gallery" id="detail-media-images">
+                                        <img ng-src="{{itemdetails.Image}}" alt="" style="max-width: 400px; max-height: 500px; display: block; margin-left: auto; margin-right: auto">
+                                    </div>
+                                    <div class="tab-pane fade light-gallery" id="detail-media-floorplan">
+                                        <a href="img/demo/floor-plan.png">
+                                            <img src="img/demo/floor-plan.png" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="tab-pane fade" id="detail-media-map">
+                                        <div id="listing-map"></div>
+                                    </div>
+                                </div>
+
+                                <!--<ul class="detail-media__nav hidden-print">
+                                    <li class="active"><a href="#detail-media-images" data-toggle="tab"><i class="zmdi zmdi-collection-image"></i></a></li>
+                                    <li><a href="#detail-media-floorplan" data-toggle="tab"><i class="zmdi zmdi-view-dashboard"></i></a></li>
+                                    <li><a href="#detail-media-map" data-toggle="tab"><i class="zmdi zmdi-map"></i></a></li>
+                                </ul>-->
+                            </div>
+
+                            <div class="detail-info">
+                                <div class="detail-info__header clearfix">
+                                    
+                                    <!--<small>Price {{itemdetails.Price}}</small>-->
+
+                                    <span ng-if="itemdetails.Rent">For Borrow</span>
+                                    <span ng-if="itemdetails.Exchange">For Exchange</span>
+                                </div>
+
+                                <!--<ul class="detail-info__list clearfix">
+                                    <li>
+                                        <span>Ownership Type</span>
+                                        <span>Villa</span>
+                                    </li>
+                                    <li>
+                                        <span>Property Area</span>
+                                        <span>2435+ sqft</span>
+                                    </li>
+                                    <li>
+                                        <span>Garages</span>
+                                        <span>04</span>
+                                    </li>
+                                    <li>
+                                        <span>Floors</span>
+                                        <span>03</span>
+                                    </li>
+                                    <li>
+                                        <span>Bedrooms</span>
+                                        <span>06</span>
+                                    </li>
+                                    <li>
+                                        <span>Bathrooms</span>
+                                        <span>06</span>
+                                    </li>
+                                </ul>-->
+                            </div>
+                        </div>
+
+                        <div class="card detail-amenities">
+                            <!-- <div class="card__header">
+                                <h2>Amenities</h2>
+                                <small>Maecenas seddiam eget risus varius blandit sitamet nonmagna</small>
+                            </div>
+
+                            <div class="card__body">
+                                <ul class="detail-amenities__list">
+                                    <li class="mdc-bg-red-300">Full-Time Doorman</li>
+                                    <li class="mdc-bg-purple-300">River Views</li>
+                                    <li class="mdc-bg-pink-300">Common Roof Deck</li>
+                                    <li class="mdc-bg-light-blue-500">City Views</li>
+                                    <li class="mdc-bg-amber-400">Gym</li>
+                                    <li class="mdc-bg-teal-400">Sauna</li>
+                                    <li class="mdc-bg-light-green-500">Open Views</li>
+                                    <li class="mdc-bg-brown-400">Basketball Court</li>
+                                    <li class="mdc-bg-blue-grey-400">Pool</li>
+                                </ul>
+                            </div> -->
+                            <div class="card__header">
+                                <h2>Owner</h2>
+                                <!--<small>Etiam porta sem malesuada magna mollis</small>-->
+                            </div>
+                            <div class="list-group">
+                                <a class="list-group-item media" href="" ng-click="redirectprofile(itemdetails.Owner)">
+                                    <div class="pull-left">
+                                        <img ng-src="{{ownerdetails.ImageURL}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>{{ownerdetails.Name}}</strong>
+                                        <!--<small class="list-group__text">{{ownerdetails.Mobile_Number}}</small>
+                                        <small class="list-group__text" ng-if="!itemdetails.IsEmailHidden">{{ownerdetails.Email}}</small>-->
+                                        <small class="list-group__text" ng-if="!itemdetails.IsAddressHidden">{{ownerdetails.City}}, {{ownerdetails.Area}}</small>
+                                        <div class="rmd-rate" data-rate-value="5" data-rate-readonly="true"></div>
+                                    </div>
+                                </a>
+                                <div ng-if="islogedin && isownerview">
+                                    <div class="actions list-group__actions">
+                                        <div class="dropdown">
+                                            <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a href="" ng-click="solditem(itemid, itemdetails.Owner)" ng-if="!itemdetails.Sold">Make Unavailable</a></li>
+                                                <li><a href="" ng-click="solditem(itemid, itemdetails.Owner)" ng-if="itemdetails.Sold">Make available</a></li>
+                                                <li><a href="" data-toggle="modal" data-target="#{{itemid}}_myModal">Edit</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="{{itemid}}_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title" id="myModalLabel">Edit Item: {{itemdetails.Name}}</h3>
+                                                </div>
+                                                <form ng-submit="edititem(itemid, itemdetails.Name, itemdetails.Description)">
+                                                    <div class="modal-body">
+                                                        <div class="form-group form-group--float form-group--float-center">
+                                                            <label>Item Name</label>
+                                                            <input type="text" class="form-control text-center" ng-model="itemdetails.Name">
+                                                        </div>
+
+                                                       <!--<div class="form-group form-group--float form-group--float-center">
+                                                            <label>Item Price</label>
+                                                            <input type="text" class="form-control text-center" ng-model="itemdetails.Price">
+                                                        </div>-->
+                                                        <div class="form-group form-group--float form-group--float-center">
+                                                            <label>Item Description</label>
+                                                            <input type="text" class="form-control text-center" ng-model="itemdetails.Description">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </form>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-10"></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" id="addClass" data-toggle="modal" data-target="#Vchat_modal" ng-if="islogedin && !isownerview && !itemdetails.Sold" ng-click="getfirstmessages(iteminbox[0].Negotiation_ID)">
+                                    <span>Start chat</span>
+                                </button>
+                                <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" id="addClass" data-toggle="modal" data-target="#Ochat_modal" ng-if="islogedin && isownerview && !itemdetails.Sold">
+                                    <span>View chat</span>
+                                </button>
+                                <span class="pull-right" id="addClass" ng-if="itemdetails.Sold">Item not available right now</span>
+                                <h2>Property Description</h2>
+                                <!-- owner chat Modal -->
+                                <div class="modal fade" id="Ochat_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Item Chat</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Tab panes -->
+                                                <div class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane active" id="inboxtab">
+                                                        <div class="list-group">
+                                                            <div ng-repeat="inboxmsg in iteminbox">
+                                                                <button type="button" class="list-group-item" ng-click="viewthread(inboxmsg.Negotiation_ID)" data-target="#messagetab" aria-controls="messagetab" role="tab" data-toggle="tab">
+                                                                    {{inboxmsg.From_User_Name}}<br>
+                                                                    <span ng-if="Is_Last_Message_Mine">Me: {{inboxmsg.Last_Message_Body}}</span><br>
+                                                                    <span ng-if="!Is_Last_Message_Mine">{{inboxmsg.From_User_Name}}: {{inboxmsg.Last_Message_Body}}</span><br>
+                                                                    &lpar;{{inboxmsg.Last_Message_Date.substr(0, 10)}} {{inboxmsg.Last_Message_Date.substr(11, 8)}}&rpar;<br>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane" id="messagetab">
+                                                        <button class="btn btn-info pull-right" data-target="#inboxtab" aria-controls="inboxtab" role="tab" data-toggle="tab">Back to inbox</button><br>
+                                                        <form ng-submit="replymessage()">
+                                                            <div class="form-group form-group--float form-group--float-center">
+                                                                <input type="text" class="form-control text-center" ng-model="messagetosend" placeholder="Type your message here" required>
+                                                                <button type="submit" class="btn btn-primary">Send message</button>
+                                                            </div>
+                                                        </form>
+                                                        <div class="row text-center">
+                                                            <div class="col-xs-6">
+                                                                Me (Owner)
+                                                            </div>
+                                                            <div class="col-xs-6">
+                                                                Requester
+                                                            </div>
+                                                        </div>
+                                                        <div style="max-height: 300px; overflow: scroll; padding: 20px">
+                                                            <div ng-repeat="message in mymessages">
+                                                                <br><br>
+                                                                <p class="well well-sm" style="float: right; max-width: 80%; overflow-wrap: break-word" ng-if="!message.Is_Mine">{{message.Message_Body}} :Requester <br><span style="font-size: 0.8em; color: #f00">{{message.Message_Date.substr(0, 10)}} {{message.Message_Date.substr(11, 8)}}</span></p>
+                                                                <p class="well well-sm" style="max-width: 80%; overflow-wrap: break-word" ng-if="message.Is_Mine">Me: {{message.Message_Body}}<br><span style="font-size: 0.8em; color: #f00">{{message.Message_Date.substr(0, 10)}} {{message.Message_Date.substr(11, 8)}}</span></p>
+                                                                <br><br>
+                                                            </div>
+                                                            <br>
+                                                            <button class="btn btn-default" style="margin-left:40%" ng-if="checkformore" ng-click="getrestmessages(iteminbox[0].Negotiation_ID, mymessages[mymessages.length-1].Message_Date, messageowner.From_User_ID)">Load More</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- visitor chat Modal -->
+                                <div class="modal fade" id="Vchat_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:right"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Item Chat</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form ng-submit="sendmessage()">
+                                                    <div class="form-group form-group--float form-group--float-center">
+                                                        <input type="text" class="form-control text-center" ng-model="messagetosend" placeholder="Type your message here" required>
+                                                        <button type="submit" class="btn btn-primary">Send message</button>
+                                                    </div>
+                                                </form>
+                                                <div class="row text-center">
+                                                    <div class="col-xs-6">
+                                                        Me
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        Owner &lpar;{{ownerdetails.Name}}&rpar;
+                                                    </div>
+                                                </div>
+                                                <div style="max-height: 300px; overflow: scroll; padding: 20px">
+                                                    <div ng-repeat="message in mymessages">
+                                                        <br><br>
+                                                        <p class="well well-sm" style="float: right; max-width: 80%; overflow-wrap: break-word" ng-if="!message.Is_Mine">{{message.Message_Body}} :{{ownerdetails.Name}} &lpar;Owner&rpar;<br><span style="font-size: 0.8em; color: #f00">{{message.Message_Date.substr(0, 10)}} {{message.Message_Date.substr(11, 8)}}</span></p>
+                                                        <p class="well well-sm" style="max-width: 80%; overflow-wrap: break-word" ng-if="message.Is_Mine">Me: {{message.Message_Body}}<br><span style="font-size: 0.8em; color: #f00">{{message.Message_Date.substr(0, 10)}} {{message.Message_Date.substr(11, 8)}}</span></p>
+                                                        <br><br>
+                                                    </div>
+                                                    <br>
+                                                    <button class="btn btn-default" style="margin-left:40%" ng-if="checkformore" ng-click="getrestmessages(iteminbox[0].Negotiation_ID, mymessages[mymessages.length-1].Message_Date, messageowner.From_User_ID)">Load More</button>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__body">
+                                <img src="img/sold.png" alt="sold" class="pull-right" style="width: 100px" ng-if="itemdetails.Sold">
+                                <p>{{itemdetails.Description}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </section>
+
+
+
+                        

@@ -1,0 +1,333 @@
+<style>
+    .listings-grid__item.listings-grid__item--sold:before {cursor: pointer}
+    .list-group__wrap {cursor: default}
+</style>
+<section class="section">
+    <div class="container container--sm">
+        <header class="section__title text-left">
+            <h2>{{userdetails.Name}}</h2>
+            <small>{{userdetails.City}}, {{userdetails.Area}}</small>
+            <div class="actions actions--section">
+                <a href="" ng-click="editprofilepage()"><i class="zmdi zmdi-edit"></i></a>
+                <!--<iframe ng-src="{{sharelink}}" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>-->
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <div class="card profile">
+            <div class="profile__img">
+                <img ng-src="{{userdetails.ImageURL}}" alt="">
+            </div>
+            <div class="profile__info">
+                <!--<span class="label label-warning">Pro Member</span>-->
+                <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" ng-click="additempage()">Add item</button>
+                <br><br><br>
+                <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" style="margin: 10px" data-toggle="modal" data-target="#addcommunitymodal">Add Community</button>
+                <div class="profile__review">
+                    <span class="rmd-rate" data-rate-value="0" data-rate-readonly="true"></span>
+                    <span>({{userdetails.Review}} Review)</span>
+                </div>
+                <ul class="rmd-contact-list">
+                    <li ng-if="userdetails.Reported" style="color: #f00"><i class="zmdi zmdi-mood-bad"></i>You are reported</li>
+                    <li><i class="zmdi zmdi-calendar"></i>Member since {{userdetails.Creation_Date.substr(0, 10)}}</li>
+                    <li><i class="zmdi zmdi-phone"></i>{{userdetails.Mobile_Number}}</li>
+                    <li><i class="zmdi zmdi-email"></i>{{userdetails.Email}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card text-center">
+            <form style="padding: 15px">
+                <label>You can send invitation to friends outside</label><br>
+                <input type="email" placeholder="E-MAIL" ng-model="invitemail">
+                <input type="submit" value="ADD" ng-click="invitation(userdetails.Refrence_ID, invitemail)">
+                <span ng-if="requestsent">Your request have been sent</span>
+            </form>
+        </div>
+        <div class="card">
+            <div class="tab-nav tab-nav--justified hidden-xs">
+                <div class="tab-nav__inner">
+                    <ul class="" role="tablist">
+                        <li role="presentation" class="active"><a href="" data-target="#Overview" aria-controls="Overview" role="tab" data-toggle="tab">Overview</a></li>
+                        <li role="presentation"><a href="" data-target="#wishlist" aria-controls="wishlist" role="tab" data-toggle="tab">My wishlist</a></li>
+                        <li role="presentation"><a href="" data-target="#Communites" aria-controls="Communites" role="tab" data-toggle="tab">My Communites</a></li>
+                        <li role="presentation"><a href="" data-target="#friends" aria-controls="friends" role="tab" data-toggle="tab">My followers</a></li>
+                        <li role="presentation"><a href="" data-target="#items" aria-controls="items" role="tab" data-toggle="tab">My Items</a></li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-default dropdown-toggle hidden-sm hidden-lg hidden-md" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; height: 50px">
+                Profile Views
+                <span class="caret"></span>
+            </button>
+            <div class="tab-nav tab-nav--justified hidden-sm hidden-lg hidden-md dropdown-menu" aria-labelledby="dropdownMenu2">
+                <div class="tab-nav__inner">
+                    <ul class="" role="tablist">
+                        <li role="presentation" class="active"><a href="" data-target="#Overview" aria-controls="Overview" role="tab" data-toggle="tab">Overview</a></li><br>
+                        <li role="presentation"><a href="" data-target="#wishlist" aria-controls="wishlist" role="tab" data-toggle="tab">My wishlist</a></li><br>
+                        <li role="presentation"><a href="" data-target="#Communites" aria-controls="Communites" role="tab" data-toggle="tab">My Communites</a></li><br>
+                        <li role="presentation"><a href="" data-target="#friends" aria-controls="friends" role="tab" data-toggle="tab">My followers</a></li><br>
+                        <li role="presentation"><a href="" data-target="#items" aria-controls="items" role="tab" data-toggle="tab">My Items</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active card__body" id="Overview">
+                    <div class="card__sub">
+                        <h4>Subscription to News letter:</h4>
+                        <p ng-if="!userdetails.Subscribed">You are subscribed</p>
+                        <a href="" ng-if="!userdetails.Subscribed" ng-click="subscribe(userdetails.Refrence_ID)"><button class="btn btn-info">Subscribe</button></a>
+                        <p ng-if="userdetails.Subscribed">You are not subscribed</p>
+                        <a href="" ng-if="userdetails.Subscribed" ng-click="unsubscribe(userdetails.Refrence_ID)"><button class="btn btn-danger">unSubscribe</button></a>
+                    </div>
+                    <div class="card__sub">
+                        <h4>Personal Information</h4>
+                        <ul>
+                            <li>Name: <span>{{userdetails.Name}}</span></li>
+                            <li>Username: <span>{{userdetails.Username}}</span></li>
+                            <li>Date of birth: <span>{{userdetails.DOB.substr(0, 10)}}</span></li>
+                            <li>Creation Date: <span>{{userdetails.Creation_Date.substr(0, 10)}}</span></li>
+                            <li>Total Points: <span>{{userdetails.TotalPoints}}</span></li>
+                            <li>Points of the current month: <span>{{userdetails.PointsOfMonth}}</span></li>
+                        </ul>
+                    </div>
+                    <div class="card__sub">
+                        <h4>Contact Information</h4>
+                        <ul class="rmd-contact-list">
+                            <li><i class="zmdi zmdi-phone"></i>Contact number: {{userdetails.Mobile_Number}}</li>
+                            <li><i class="zmdi zmdi-email"></i>Contact E-Mail: {{userdetails.Email}}</li>
+                            <li ng-if="userdetails.FB_ID !== 'null'"><i class="zmdi zmdi-facebook"></i>Username: {{userdetails.Username}}</li>
+                            <li ng-if="userdetails.FB_ID === 'null'"><i class="zmdi zmdi-account"></i>Username: {{userdetails.Username}}</li>
+                            <li><i class="zmdi zmdi-pin"></i>Address: {{userdetails.City}}, {{userdetails.Area}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade listings-list listings-list--alt" id="wishlist">
+                    <div class="list-group-item media" ng-if="usrwishes.length === 0">You Have nothing in your wish list</div>
+                    <div ng-repeat="usrwish in usrwishes">
+                        <div ng-if="!usrwish.ISSold" class="listings-grid__item" ng-click="redirectitem(usrwish.Item_ID)">
+                            <a href="" class="media">
+                                <div class="listings-grid__main pull-left">
+                                    <img ng-src="{{usrwish.ItemImage}}" alt="">
+                                    <div class="listings-grid__price" ng-if="ItemType === Rent">For Borrow</div>
+                                    <div class="listings-grid__price" ng-if="ItemType !== Rent">Exchange</div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="listings-grid__body">
+                                        <small>{{usrwish.ItemOwnerAddress}}</small>
+                                        <h5>{{usrwish.ItemName}}</h5>
+                                        <h5>{{usrwish.Date.substr(0, 10)}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li class=" pull-right"><img ng-src="{{usrwish.ItemOwnerImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                        <div ng-if="usrwish.ISSold" class="listings-grid__item listings-grid__item--sold" ng-click="redirectitem(usrwish.Item_ID)">
+                            <a href="" class="media">
+                                <div class="pull-left listings-grid__main">
+                                    <img ng-src="{{usrwish.ItemImage}}" alt="">
+                                    <div class="listings-grid__price" ng-if="ItemType === Rent">For Borrow</div>
+                                    <div class="listings-grid__price" ng-if="ItemType !== Rent">Exchange</div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="listings-grid__body">
+                                        <small>{{usrwish.ItemOwnerAddress}}</small>
+                                        <h5>{{usrwish.ItemName}}</h5>
+                                        <h5>{{usrwish.Date.substr(0, 10)}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li class=" pull-right"><img ng-src="{{usrwish.ItemOwnerImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade list-group" id="Communites">
+                    <div class="list-group-item media" ng-if="usrcommunities.length === 0">You are not part of any community</div>
+                    <div class="list-group-item media" ng-repeat="usrcommunity in usrcommunities">
+                        <a href="">
+                            <div class="pull-left">
+                                <img ng-src="{{usrcommunity.Community_Image}}" alt="" class="list-group__img" width="60">
+                            </div>
+                            <div class="media-body list-group__text">
+                                <strong>{{usrcommunity.Community_Name}}</strong>
+                                <small>{{usrcommunity.No_Of_Members}} members . joined: {{usrcommunity.Join_Date.substr(0, 10)}}</small>
+                            </div>
+                        </a>
+                        <div class="actions list-group__actions">
+                            <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="" ng-click="redirectcomm(usrcommunity.Community_ID)">View </a></li>    
+                                <li><a href="" ng-click="leavecommunity(usrcommunity.Community_ID)">Leave</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a class="view-more" href="" ng-click="communitiespage()">
+                        View all communities
+                    </a>
+                </div>
+                <div role="tabpanel" class="tab-pane fade list-group m-t-20" id="friends">
+                    
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="" data-target="#currentfriends" aria-controls="currentfriends" role="tab" data-toggle="tab">My followers</a></li>
+                        <li role="presentation"><a href="" data-target="#newfriends" aria-controls="newfriends" role="tab" data-toggle="tab">Pending follow requests</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="currentfriends">
+                            <div class="list-group__wrap" ng-if="friends.length === 0" style="padding: 15px">There are no friends to show yet. add some and you will find them here.</div>
+                            <div class="list-group__wrap" ng-repeat="friend in friends">
+                                <a class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img ng-src="{{friend.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>{{friend.Name}}</strong>
+                                        <small class="list-group__text">{{friend.Mobile}} . {{friend.Email}}</small>
+                                    </div>
+                                </a>
+                                <div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="" ng-click="redirectuser(friend.Refrence_ID)">View</a></li>
+                                            <li><a href="" ng-click="deleteuser(friend.Refrence_ID)">Remove</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="load-more">
+                                <a href="#"><i class="zmdi zmdi-refresh-alt"></i> Load more Friends </a>
+                            </div>
+                            <div class="p-20"></div>-->
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="newfriends">
+                            <div class="list-group__wrap" ng-if="requests.length === 0" style="padding: 15px">There are no friends requests right now.</div>
+                            <div class="list-group__wrap" ng-repeat="request in requests">
+                                <a class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img ng-src="{{request.RequesterImage}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>{{request.RequesterName}}</strong>
+                                    </div>
+                                </a>
+                                <div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="" ng-click="redirectuser(request.RequesterID)">View</a></li>
+                                            <li><a href="" ng-click="acceptreq(request.RequesterID)">Accept</a></li>
+                                            <li><a href="" ng-click="declinereq(request.RequesterID)">Decline</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade list-group m-t-20" id="items">
+                    <div class="list-group__wrap" ng-if="useritems.length === 0" style="padding: 15px">There are no items to show yet. add some and you will find them here.</div>
+                    <div class="list-group__wrap" ng-repeat="item in useritems">
+                        <a class="list-group-item media" style="cursor: default">
+                            <div class="pull-left">
+                                <img ng-src="{{item.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                            </div>
+                            <div class="media-body list-group__text">
+                                <strong>{{item.Name}}</strong>
+                                <span style="color: #f00" ng-if="item.Sold">Item Marked Not Available</span>
+                                <span style="color: #00f" ng-if="!item.Sold">Item Marked Available</span>
+                                <small class="list-group__text"><!--Price: {{item.Price}} ,--> <span ng-if="item.Rent">For Borrow</span> <span ng-if="item.Exchange">For Exchange</span></small>
+                            </div>
+                        </a>
+                        <div class="actions list-group__actions">
+                            <div class="dropdown">
+                                <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="" ng-click="redirectitempage(item.Item_ID)">View</a></li>
+                                    <li><a href="" ng-click="solditem(item.Item_ID)" ng-if="item.Sold">Make Available</a></li>
+                                    <li><a href="" ng-click="solditem(item.Item_ID)" ng-if="!item.Sold">Make Unavailable</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#{{item.Item_ID}}_myModal">Edit</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{item.Item_ID}}_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="myModalLabel">Edit Item: {{item.Name}}</h3>
+                                    </div>
+                                    <form ng-submit="edititem(item.Item_ID, item.Name, item.Description)">
+                                        <div class="modal-body">
+                                            <div class="form-group form-group--float form-group--float-center">
+                                                <label>Item Name</label>
+                                                <input type="text" class="form-control text-center" ng-model="item.Name">
+                                            </div>
+
+                                           <!--<div class="form-group form-group--float form-group--float-center">
+                                                <label>Item Price</label>
+                                                <input type="text" class="form-control text-center" ng-model="item.Price">
+                                            </div>-->
+                                            <div class="form-group form-group--float form-group--float-center">
+                                                <label>Item Description</label>
+                                                <input type="text" class="form-control text-center" ng-model="item.Description">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- community Modal -->
+<div class="modal fade" id="addcommunitymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Community</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card" ng-if="!readyforimage">
+            <form class="card__body" ng-submit="newcommunity(name, description)">
+                <div class="form-group form-group--float form-group--float-center">
+                    <input type="text" class="form-control text-center" required ng-model="name">
+                    <i class="form-group__bar"></i>
+                    <label>Community Name</label>
+                </div>
+                <div class="form-group form-group--float form-group--float-center">
+                    <textarea class="form-control text-center textarea-autoheight" required ng-model="description"></textarea>
+                    <i class="form-group__bar"></i>
+                    <label>Specifications</label>
+                </div>
+                <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+            </form>
+        </div>
+        <div class="card" ng-if="readyforimage">
+            <div class="card__header">
+                <h2>Item Image</h2>
+            </div>
+
+            <form class="card__body" ng-submit="uploadcommunityimage()">
+                 <div class="new-contact__img">
+                    <img src="img/user_empty.png" alt="">
+                     <input type="file" id="myFileField" name="myFile" />
+                </div>
+                <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

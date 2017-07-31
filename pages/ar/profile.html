@@ -1,0 +1,333 @@
+<style>
+    .listings-grid__item.listings-grid__item--sold:before {cursor: pointer}
+    .list-group__wrap {cursor: default}
+</style>
+<section class="section">
+    <div class="container container--sm">
+        <header class="section__title">
+            <h2>{{userdetails.Name}}</h2>
+            <small>{{userdetails.City}}, {{userdetails.Area}}</small>
+            <div class="actions actions--section pull-left">
+                <a href="" ng-click="editprofilepage()"><i class="zmdi zmdi-edit"></i></a>
+                <!--<iframe ng-src="{{sharelink}}" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>-->
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <div class="card profile">
+            <div class="profile__img pull-right">
+                <img ng-src="{{userdetails.ImageURL}}" alt="">
+            </div>
+            <div class="profile__info">
+                <!--<span class="label label-warning">Pro Member</span>-->
+                <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" ng-click="additempage()">اضف منتج</button>
+                <br><br><br>
+                <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" style="margin: 10px" data-toggle="modal" data-target="#addcommunitymodal">اضف مجتمع</button>
+                <div class="profile__review">
+                    <span class="rmd-rate" data-rate-value="0" data-rate-readonly="true"></span>
+                    <span>({{userdetails.Review}} تقييم)</span>
+                </div>
+                <ul class="rmd-contact-list">
+                    <li ng-if="userdetails.Reported" style="color: #f00"><i class="zmdi zmdi-mood-bad pull-right"></i>تم التقرير بك</li>
+                    <li><i class="zmdi zmdi-calendar pull-right"></i>عضو منذ {{userdetails.Creation_Date.substr(0, 10)}}</li>
+                    <li><i class="zmdi zmdi-phone pull-right"></i>{{userdetails.Mobile_Number}}</li>
+                    <li><i class="zmdi zmdi-email pull-right"></i>{{userdetails.Email}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card text-center">
+            <form style="padding: 15px">
+                <label>يمكنك ارسال دعوة لاصدقائك خارج سلفة</label><br>
+                <input type="email" placeholder="البريد الااليكتروني" ng-model="invitemail">
+                <input type="submit" value="اضافة" ng-click="invitation(userdetails.Refrence_ID, invitemail)">
+                <span ng-if="requestsent">تم ارسال طلبك بنجاح</span>
+            </form>
+        </div>
+        <div class="card">
+            <div class="tab-nav tab-nav--justified hidden-xs">
+                <div class="tab-nav__inner">
+                    <ul class="" role="tablist">
+                        <li role="presentation" class="active"><a href="" data-target="#Overview" aria-controls="Overview" role="tab" data-toggle="tab">بينات حسابي</a></li>
+                        <li role="presentation"><a href="" data-target="#wishlist" aria-controls="wishlist" role="tab" data-toggle="tab">قائمة الاماني</a></li>
+                        <li role="presentation"><a href="" data-target="#Communites" aria-controls="Communites" role="tab" data-toggle="tab">قائمة المجتمعات</a></li>
+                        <li role="presentation"><a href="" data-target="#friends" aria-controls="friends" role="tab" data-toggle="tab">قائمة المتابعيين</a></li>
+                        <li role="presentation"><a href="" data-target="#items" aria-controls="items" role="tab" data-toggle="tab">قائمة المنتجات</a></li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-default dropdown-toggle hidden-sm hidden-lg hidden-md" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; height: 50px">
+                قوائم الصفحة الرئيسية
+                <span class="caret"></span>
+            </button>
+            <div class="tab-nav tab-nav--justified hidden-sm hidden-lg hidden-md dropdown-menu" aria-labelledby="dropdownMenu2">
+                <div class="tab-nav__inner">
+                    <ul class="" role="tablist">
+                        <li role="presentation" class="active"><a href="" data-target="#Overview" aria-controls="Overview" role="tab" data-toggle="tab">بينات حسابي</a></li><br>
+                        <li role="presentation"><a href="" data-target="#wishlist" aria-controls="wishlist" role="tab" data-toggle="tab">قائمة الاماني</a></li><br>
+                        <li role="presentation"><a href="" data-target="#Communites" aria-controls="Communites" role="tab" data-toggle="tab">قائمة المجتمعات</a></li><br>
+                        <li role="presentation"><a href="" data-target="#friends" aria-controls="friends" role="tab" data-toggle="tab">قائمة المتابعيين</a></li><br>
+                        <li role="presentation"><a href="" data-target="#items" aria-controls="items" role="tab" data-toggle="tab">قائمة المنتجات</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active card__body" id="Overview">
+                    <div class="card__sub">
+                        <h4>اخبار سلفة:</h4>
+                        <p ng-if="!userdetails.Subscribed">انت مسجل</p>
+                        <a href="" ng-if="!userdetails.Subscribed" ng-click="subscribe(userdetails.Refrence_ID)"><button class="btn btn-info">سجل</button></a>
+                        <p ng-if="userdetails.Subscribed">انت غير مسجل</p>
+                        <a href="" ng-if="userdetails.Subscribed" ng-click="unsubscribe(userdetails.Refrence_ID)"><button class="btn btn-danger">الغاء التسجيل</button></a>
+                    </div>
+                    <div class="card__sub">
+                        <h4>المعلومات الشخصية</h4>
+                        <ul>
+                            <li>الاسم: <span>{{userdetails.Name}}</span></li>
+                            <li>اسم المستخدم: <span>{{userdetails.Username}}</span></li>
+                            <li>تاريخ الميلاد: <span>{{userdetails.DOB.substr(0, 10)}}</span></li>
+                            <li>تاريخ انشاء الحساب: <span>{{userdetails.Creation_Date.substr(0, 10)}}</span></li>
+                            <li>النقاط الكلية: <span>{{userdetails.TotalPoints}}</span></li>
+                            <li>نقاط الشهر الجاري: <span>{{userdetails.PointsOfMonth}}</span></li>
+                        </ul>
+                    </div>
+                    <div class="card__sub">
+                        <h4>بينات التواصل</h4>
+                        <ul class="rmd-contact-list">
+                            <li><i class="zmdi zmdi-phone pull-right"></i>رقم الهاتف: {{userdetails.Mobile_Number}}</li>
+                            <li><i class="zmdi zmdi-email pull-right"></i>البريد الاليكتروني: {{userdetails.Email}}</li>
+                            <li ng-if="userdetails.FB_ID !== 'null'"><i class="zmdi zmdi-facebook pull-right"></i>اسم المستخدم: {{userdetails.Username}}</li>
+                            <li ng-if="userdetails.FB_ID === 'null'"><i class="zmdi zmdi-account pull-right"></i>اسم المستخدم: {{userdetails.Username}}</li>
+                            <li><i class="zmdi zmdi-pin pull-right"></i>العنوان: {{userdetails.City}}, {{userdetails.Area}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade listings-list listings-list--alt" id="wishlist">
+                    <div class="list-group-item media" ng-if="usrwishes.length === 0">لا يوجد شيئ فب قائمة الامنيات</div>
+                    <div ng-repeat="usrwish in usrwishes">
+                        <div ng-if="!usrwish.ISSold" class="listings-grid__item" ng-click="redirectitem(usrwish.Item_ID)">
+                            <a href="" class="media">
+                                <div class="listings-grid__main pull-left">
+                                    <img ng-src="{{usrwish.ItemImage}}" alt="">
+                                    <div class="listings-grid__price" ng-if="ItemType === Rent">للاقتراض</div>
+                                    <div class="listings-grid__price" ng-if="ItemType !== Rent">للتبادل</div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="listings-grid__body">
+                                        <small>{{usrwish.ItemOwnerAddress}}</small>
+                                        <h5>{{usrwish.ItemName}}</h5>
+                                        <h5>{{usrwish.Date.substr(0, 10)}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li class=" pull-right"><img ng-src="{{usrwish.ItemOwnerImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                        <div ng-if="usrwish.ISSold" class="listings-grid__item listings-grid__item--sold" ng-click="redirectitem(usrwish.Item_ID)">
+                            <a href="" class="media">
+                                <div class="pull-left listings-grid__main">
+                                    <img ng-src="{{usrwish.ItemImage}}" alt="">
+                                    <div class="listings-grid__price" ng-if="ItemType === Rent">للاقتراض</div>
+                                    <div class="listings-grid__price" ng-if="ItemType !== Rent">للتبادل</div>
+                                </div>
+                                <div class="media-body">
+                                    <div class="listings-grid__body">
+                                        <small>{{usrwish.ItemOwnerAddress}}</small>
+                                        <h5>{{usrwish.ItemName}}</h5>
+                                        <h5>{{usrwish.Date.substr(0, 10)}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li class=" pull-right"><img ng-src="{{usrwish.ItemOwnerImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade list-group" id="Communites">
+                    <div class="list-group-item media" ng-if="usrcommunities.length === 0">انت لست عضو في اي مجتمع</div>
+                    <div class="list-group-item media" ng-repeat="usrcommunity in usrcommunities">
+                        <a href="">
+                            <div class="pull-left">
+                                <img ng-src="{{usrcommunity.Community_Image}}" alt="" class="list-group__img" width="60">
+                            </div>
+                            <div class="media-body list-group__text pull-left">
+                                <strong>{{usrcommunity.Community_Name}}</strong>
+                                <small>{{usrcommunity.No_Of_Members}} اعضاء . انضم: {{usrcommunity.Join_Date.substr(0, 10)}}</small>
+                            </div>
+                        </a>
+                        <div class="actions list-group__actions">
+                            <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="" ng-click="redirectcomm(usrcommunity.Community_ID)">افتح </a></li>    
+                                <li><a href="" ng-click="leavecommunity(usrcommunity.Community_ID)">اترك</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a class="view-more" href="" ng-click="communitiespage()">
+                        استكشف كل المجتمعات
+                    </a>
+                </div>
+                <div role="tabpanel" class="tab-pane fade list-group m-t-20" id="friends">
+                    
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="" data-target="#currentfriends" aria-controls="currentfriends" role="tab" data-toggle="tab">متتبعييني</a></li>
+                        <li role="presentation"><a href="" data-target="#newfriends" aria-controls="newfriends" role="tab" data-toggle="tab">طلبات التتبع</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="currentfriends">
+                            <div class="list-group__wrap" ng-if="friends.length === 0" style="padding: 15px">لا يوجد متابعيين عند اضافة البعض ستجدهم هنا </div>
+                            <div class="list-group__wrap" ng-repeat="friend in friends">
+                                <a class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img ng-src="{{friend.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                    </div>
+                                    <div class="media-body list-group__text pull-left">
+                                        <strong>{{friend.Name}}</strong>
+                                        <small class="list-group__text">{{friend.Mobile}} . {{friend.Email}}</small>
+                                    </div>
+                                </a>
+                                <div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="" ng-click="redirectuser(friend.Refrence_ID)">افتح</a></li>
+                                            <li><a href="" ng-click="deleteuser(friend.Refrence_ID)">ازالة</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="load-more">
+                                <a href="#"><i class="zmdi zmdi-refresh-alt"></i> Load more Friends </a>
+                            </div>
+                            <div class="p-20"></div>-->
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="newfriends">
+                            <div class="list-group__wrap" ng-if="requests.length === 0" style="padding: 15px">لا يوجد طلبات متابعة الان</div>
+                            <div class="list-group__wrap" ng-repeat="request in requests">
+                                <a class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img ng-src="{{request.RequesterImage}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                    </div>
+                                    <div class="media-body list-group__text pull-left">
+                                        <strong>{{request.RequesterName}}</strong>
+                                    </div>
+                                </a>
+                                <div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="" ng-click="redirectuser(request.RequesterID)">الفتح</a></li>
+                                            <li><a href="" ng-click="acceptreq(request.RequesterID)">القبول</a></li>
+                                            <li><a href="" ng-click="declinereq(request.RequesterID)">الرفض</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade list-group m-t-20" id="items">
+                    <div class="list-group__wrap" ng-if="useritems.length === 0" style="padding: 15px">لا يوجد منجات بعد اضف منتج و سوف يظهلر هنا </div>
+                    <div class="list-group__wrap" ng-repeat="item in useritems">
+                        <a class="list-group-item media" style="cursor: default">
+                            <div class="pull-left">
+                                <img ng-src="{{item.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                            </div>
+                            <div class="media-body list-group__text pull-left">
+                                <strong>{{item.Name}}</strong>
+                                <span style="color: #f00" ng-if="item.Sold">المنتج مسجل غير متاح</span>
+                                <span style="color: #00f" ng-if="!item.Sold">المنتج مسجل متاح</span>
+                                <small class="list-group__text"><!--السعر: {{item.Price}} ,--> <span ng-if="item.Rent">للاقتراض</span> <span ng-if="item.Exchange">للتبادل</span></small>
+                            </div>
+                        </a>
+                        <div class="actions list-group__actions">
+                            <div class="dropdown">
+                                <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="" ng-click="redirectitempage(item.Item_ID)">الفتح</a></li>
+                                    <li><a href="" ng-click="solditem(item.Item_ID)" ng-if="item.Sold">اجعلة متاح</a></li>
+                                    <li><a href="" ng-click="solditem(item.Item_ID)" ng-if="!item.Sold">اجعلة غير متاح</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#{{item.Item_ID}}_myModal">التعديل</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{item.Item_ID}}_myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="myModalLabel">تعديل المنتج: {{item.Name}}</h3>
+                                    </div>
+                                    <form ng-submit="edititem(item.Item_ID, item.Name, item.Description)">
+                                        <div class="modal-body">
+                                            <div class="form-group form-group--float form-group--float-center">
+                                                <label>اسم المنتج</label>
+                                                <input type="text" class="form-control text-center" ng-model="item.Name">
+                                            </div>
+
+                                           <!--<div class="form-group form-group--float form-group--float-center">
+                                                <label>سعر المنتج</label>
+                                                <input type="text" class="form-control text-center" ng-model="item.Price">
+                                            </div>-->
+                                            <div class="form-group form-group--float form-group--float-center">
+                                                <label>وصف المنتج</label>
+                                                <input type="text" class="form-control text-center" ng-model="item.Description">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                                            <button type="submit" class="btn btn-primary">حفظ التعديل</button>
+                                        </div>
+                                    </form>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- community Modal -->
+<div class="modal fade" id="addcommunitymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">اضافة مجتمع</h4>
+      </div>
+      <div class="modal-body">
+        <div class="card" ng-if="!readyforimage">
+            <form class="card__body" ng-submit="newcommunity(name, description)">
+                <div class="form-group form-group--float form-group--float-center">
+                    <input type="text" class="form-control text-center" required ng-model="name">
+                    <i class="form-group__bar"></i>
+                    <label>اسم المجتمع</label>
+                </div>
+                <div class="form-group form-group--float form-group--float-center">
+                    <textarea class="form-control text-center textarea-autoheight" required ng-model="description"></textarea>
+                    <i class="form-group__bar"></i>
+                    <label>تاوصف</label>
+                </div>
+                <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+            </form>
+        </div>
+        <div class="card" ng-if="readyforimage">
+            <div class="card__header">
+                <h2>صورة المجتمع</h2>
+            </div>
+
+            <form class="card__body" ng-submit="uploadcommunityimage()">
+                 <div class="new-contact__img">
+                    <img src="img/user_empty.png" alt="">
+                     <input type="file" id="myFileField" name="myFile" />
+                </div>
+                <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

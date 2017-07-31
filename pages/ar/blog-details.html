@@ -1,0 +1,212 @@
+<section ng-controller="var_blogCtrl">
+        <!--<div class="action-header">
+            <div class="container">
+                <div class="action-header__item action-header__item--search">
+                    <form>
+                        <input type="text" class="hidden-sm hidden-xs" placeholder="Search for articles, comments and people">
+                        <input type="text" class="visible-xs visible-sm" placeholder="Search...">
+                    </form>
+                </div>
+            </div>
+        </div>-->
+
+        <section class="section">
+            <div class="container">
+                <header class="section__title">
+                    <h2>{{blogdetails.Title}}</h2>
+                    <small>تمت الكتابة بواسطة {{blogdetails.Writer_Name}} في {{blogdetails.Creation_Date.substr(0, 10)}}</small>
+
+                    <!--<div class="actions actions--section">
+                        <div class="actions__toggle">
+                            <input type="checkbox">
+                            <i class="zmdi zmdi-favorite-outline"></i>
+                            <i class="zmdi zmdi-favorite"></i>
+                        </div>
+
+                        <div class="dropdown">
+                            <iframe ng-src="{{sharelink}}" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+
+                        </div>
+
+                        <a href="" data-rmd-action="scroll-to" data-rmd-target=".blog-comment" data-rmd-offset="85">
+                            <i class="zmdi zmdi-comment-alt-text"></i>
+                        </a>
+                    </div>-->
+                </header>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-5"></div>
+                    <div class="col-md-8 col-sm-7">
+                        <article class="card blog">
+                            <div class="card__img">
+                                <img ng-src="{{blogdetails.BlogImage}}" alt="" style="max-width: 400px; max-height: 400px; margin: auto; display: block; padding:20px">
+                            </div>
+                            <div class="card__body">
+                                <p class="lead">{{blogdetails.Body}}</p>
+                            </div>
+
+                            <!--<div class="blog__tags">
+                                <a href="#" class="tags-list__item">#Sollicitudin</a>
+                                <a href="#" class="tags-list__item">#Ultricies</a>
+                                <a href="#" class="tags-list__item">#Elit</a>
+                                <a href="#" class="tags-list__item">#Crastortor</a>
+                            </div>
+
+                            <div class="blog__arthur">
+                                <div class="blog__arthur-img">
+                                    <img src="img/demo/people/8.jpg" alt="">
+                                </div>
+                                <div class="blog__arthur-contents">
+                                    <h2>Nour Ahmed</h2>
+                                    <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida at eget metus.</p>
+
+                                    <div class="blog__arthur-social">
+                                        <a href="#" class="mdc-bg-indigo-500"><i class="zmdi zmdi-facebook"></i></a>
+                                        <a href="#" class="mdc-bg-cyan-500"><i class="zmdi zmdi-twitter"></i></a>
+                                        <a href="#" class="mdc-bg-red-400"><i class="zmdi zmdi-google"></i></a>
+                                        <a href="#" class="mdc-bg-blue-600"><i class="zmdi zmdi-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </article>
+                        
+                        <!-- Post a comment -->
+                        <div id="blog-comment" class="card card--dark mdc-bg-orange-300" ng-if="islogedin">
+                            <div class="card__header">
+                                <h2>اترك تعليق</h2>
+                            </div>
+
+                            <form class="card__body" ng-submit="commentonblog()">
+                                <div class="row">
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group form-group--light form-group--float">
+                                            <input type="text" required ng-model="commonblog" class="textarea-autoheight form-control">
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type: submit class="btn btn-default btn-sm m-t-15 mdc-text-orange-700">ارسل التعليق</button>
+                            </form>
+                        </div>
+                        <!-- Comment Lists -->
+                        <div class="card list-group blog-comment">
+                            <div class="list-group__header clearfix">
+                                <span class="">{{blogcomments.length}} تعليقات حتى الان...</span>
+
+                                <!--<a href="" data-rmd-action="scroll-to" data-rmd-target="#blog-comment" data-rmd-offset="85" class="pull-right"><span class="hidden-xs">LEAVE A </span>COMMENT</a>-->
+                            </div>
+                            <div ng-repeat="blogcomment in blogcomments">
+                                <div class="list-group-item media">
+                                    <a class="">
+                                        <img ng-src="{{blogcomment.Commenter_Image}}" class="list-group__img img-circle" width="50" height="50" alt="" style="margin-top:5px; display: inline-block">
+                                    </a>
+                                    <div class="media-body list-group__text" style="display: inline-block">
+                                        <b>{{blogcomment.Commenter_Name}}</b>
+                                        <span>{{blogcomment.Comment_Date.substr(0, 10)}} <span class="hidden-xs">في {{blogcomment.Comment_Date.substr(11, 5)}}</span></span>
+                                        <p class="m-t-15" style="margin-top:0px; font-size: 1.25em">{{blogcomment.Comment}}</p>
+
+                                        <!--<div class="actions actions--blog-comment dropdown">
+                                            <a href="#" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu--icon pull-right">
+                                                <li><a href="#"><i class="zmdi zmdi-thumb-up"></i> +1</a></li>
+                                                <li><a href="#" data-rmd-action="blog-comment-open"><i class="zmdi zmdi-mail-reply"></i> Reply</a></li>
+                                                <li><a href="#"><i class="zmdi zmdi-alert-octagon"></i> Report</a></li>
+                                            </ul>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+
+                    <!--<aside class="col-md-4 col-sm-5 hidden-xs">
+                        <div class="card subscribe mdc-bg-orange-300">
+                            <div class="subscribe__icon">
+                                <i class="zmdi zmdi-email"></i>
+                            </div>
+
+                            <h2>Subscribe for Newsletters</h2>
+                            <small>Curabitur blandit tempus porttitor adipiscing maecenas faucibus mollis interdum</small>
+
+                            <form>
+                                <div class="form-group form-group--light form-group--float">
+                                    <input type="text" class="form-control text-center" placeholder="Email Address">
+                                    <i class="form-group__bar"></i>
+                                </div>
+
+                                <button class="btn btn--circle">
+                                    <i class="zmdi zmdi-check mdc-text-orange-400"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h2>Related articles</h2>
+                                <small>Morbi risus porta consectetur vestibulum</small>
+                            </div>
+
+                            <div class="list-group">
+                                <a href="#" class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img src="img/demo/listing/thumbs/2.jpg" alt="" class="list-group__img" width="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Vivamus sagittis lacus</strong>
+                                        <small>Cras mattis consectetur purus sit amet fermentum</small>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img src="img/demo/listing/thumbs/3.jpg" alt="" class="list-group__img" width="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Fusce dapibus tellusac</strong>
+                                        <small>Praesent commodo cursus magna, vel scelerisque nisl consectetur et</small>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img src="img/demo/listing/thumbs/4.jpg" alt="" class="list-group__img" width="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Praesent commodo cursus magnavel scelerisque nisl</strong>
+                                        <small>Maecenas sed diam eget risus varius blandit sit amet non magna</small>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img src="img/demo/listing/thumbs/5.jpg" alt="" class="list-group__img" width="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Lorem ipsum dolor sitamet</strong>
+                                        <small>Donec ullamcorper nulla non metus auctor fringilla</small>
+                                    </div>
+                                </a>
+
+                                <a href="#" class="list-group-item media">
+                                    <div class="pull-left">
+                                        <img src="img/demo/listing/thumbs/6.jpg" alt="" class="list-group__img" width="65">
+                                    </div>
+                                    <div class="media-body list-group__text">
+                                        <strong>Fusce dapibus accursus commodo</strong>
+                                        <small>Aenean lacinia bibendum nulla sed consectetur</small>
+                                    </div>
+                                </a>
+
+                                <div class="p-10"></div>
+                            </div>
+                        </div>
+                    </aside>-->
+                </div>
+            </div>
+        </section>
+
+</section>

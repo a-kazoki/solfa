@@ -1,0 +1,10 @@
+<section style="min-height: 400px" class="text-center" ng-if="!isblog && !iscommunity && !issearch && !isprofile && !isitem && !isinvite && !isconfirm">
+    <h2>انتظر معنا لحظة واحدة سوف يتم تحويلك</h2>
+</section>
+<div ng-include="'pages/ar/blog-details.html'" ng-if="isblog"></div>
+<div ng-include="'pages/ar/listing-detail.html'" ng-if="isitem"></div>
+<div ng-include="'pages/ar/owner.html'" ng-if="isprofile"></div>
+<div ng-include="'pages/ar/searchres.html'" ng-if="issearch"></div>
+<div ng-include="'pages/ar/community.html'" ng-if="iscommunity"></div>
+<div ng-include="'pages/ar/invitation.html'" ng-if="isinvite"></div>
+<div ng-include="'pages/ar/confirmurl.html'" ng-if="isconfirm"></div>

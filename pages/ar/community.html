@@ -1,0 +1,219 @@
+<style>
+    .listings-grid__item.listings-grid__item--sold:before {background: url(img/sold.png) bottom 15px left 30px no-repeat; background-size: 100px;}
+</style>
+<section ng-controller="var_communityCtrl">
+
+        <!--<div class="action-header">
+            <div class="container">
+                <div class="action-header__item action-header__item--search">
+                    <form>
+                        <input type="text" placeholder="Owner name, wanted">
+                    </form>
+                </div>
+
+                <div class="action-header__item action-header__item--sort hidden-xs">
+                    <span class="action-header__small">Filter by :</span>
+
+                    <select class="select2">
+                        <option>Category</option>
+                        <option>Category-1</option>
+                        <option>Category-2</option>
+                        <option>Category-3</option>
+                        <option>Category-4</option>
+                    </select>
+                </div>
+            </div>
+        </div>-->
+
+        <section class="section">
+            <div class="container">
+                <header class="section__title">
+                    <h2>{{communityname}}</h2>
+                    <div ng-if="islogedin">
+                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700" ng-if="!isowner && !isjoined" ng-click="requestjoin()">انضم للمجتمع</button>
+                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700" ng-if="!isowner && isjoined" ng-click="requestleave()">اترك المجتمع</button>
+                        <p ng-if="isowner">انت منشئ هذا المجتمع</p>
+                    </div>
+                </header>
+                
+
+                <div class="row">
+                     <div class="col-md-4">
+                         
+                            <div class="card">
+                                <div class="card__header">
+                                    <h2 style="display: inline-block">الاعضاء</h2>
+                                    <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" ng-if="isowner || isjoined" data-toggle="modal" data-target="#addfriends">اضافة جديد</button>
+                                </div>
+
+                                <div class="groups-grid groups-grid--widget">
+                                    <div ng-repeat="communitymember in communitymembers|limitTo:4">
+                                        <a class="groups-grid__item" href="" ng-click="redirectuser(communitymember.User_ID)">
+                                            <div class="groups-grid__img">
+                                                <img class="groups-grid__avatar" ng-src="{{communitymember.Image}}" alt="" ng-if="communitymember.Image !== null">
+                                                <div class="groups-grid__avatar avatar-char avatar-char--sm mdc-bg-light-blue-400" ng-if="communitymember.Image === null">{{communitymember.Name.substr(0, 2)}}</div>
+                                            </div>
+
+                                            <div class="groups-grid__info">
+                                                <strong>{{communitymember.Name}}</strong>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                    <a href="" class="view-more" data-toggle="modal" data-target="#allmembersmodal">اظهار الكل</a>
+                                </div>
+                            </div>
+                        <div class="list-group list-group--block contact-lists">
+                            <div class="list-group__header">
+                                {{allusers.length}} قائمة المستخدميين
+                            </div>
+                                              
+                            <div class="list-group__wrap" ng-repeat="user in allusers|limitTo:3">
+                                <a class="list-group-item media" href="" ng-click="redirectuser(user.Refrence_ID)" data-toggle="modal">
+                                    <div class="" style="display: inline-block">
+                                        <div class="avatar-char mdc-bg-amber-400" ng-if="user.ImageURL === null">{{user.Name.substring(0, 2)}}</div>
+                                        <img ng-src="{{user.ImageURL}}" class="list-group__img img-circle" width="50" height="50" alt="" ng-if="user.ImageURL !== null">
+                                    </div>
+                                     <div class="media-body list-group__text" style="display: inline-block">
+                                        <strong>{{user.Name}}</strong>
+                                        <div class="list-group__attrs">
+                                            <div>هذا الشهر: {{user.PointsOfMonth}} نقاط</div>
+                                            <div>الكل: {{user.TotalPoints}} نقاط</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <!--<div class="actions list-group__actions">
+                                    <div class="dropdown">
+                                        <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu pull-right" ng-if="islogedin">
+                                            <li><a href="">Add to group</a></li>
+                                            <li><a href="">Add Contact</a></li>
+                                            <li><a href="">Delete</a></li>
+                                        </ul>
+                                        <ul class="dropdown-menu pull-right" ng-if="!islogedin" style="cursor: not-allowed" data-toggle="tooltip" data-placement="left" title="To use these options you must login first">
+                                            <li><p style="padding: 10px 20px">Add to group</p></li>
+                                            <li><p style="padding: 10px 20px">Add Contact</p></li>
+                                            <li><p style="padding: 10px 20px">Delete</p></li>
+                                        </ul>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="load-more" style="margin-bottom: 20px">
+                                <a href="" ng-click="boardpage()"><i class="zmdi zmdi-refresh-alt"></i> اظهر مستخدميين اكثر</a>
+                            </div>
+                            </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="listings-list listings-list--alt">
+                                <div ng-repeat="commitem in communityitems">
+                                    <div class="listings-grid__item" ng-if="!commitem.ISSold" ng-click="redirectitem(commitem.Item_ID)" style="cursor: pointer">
+                                        <a href="" class="media" style="cursor: pointer">
+                                            <div class="listings-grid__main" style="display: inline-block">
+                                                <img ng-src="{{commitem.ItemImage}}" alt="">
+                                                <div class="listings-grid__price">معروض ل  {{commitem.Type}}</div>
+                                            </div>
+
+                                            <div class="media-body" style="display: inline-block">
+                                                <div class="listings-grid__body">
+                                                    <small>{{commitem.ItemName}}</small>
+                                                    <h5>عنوان البائع: {{commitem.ItemOwnerAddress}}</h5>
+                                                </div>
+                                                <ul class="listings-grid__attrs">
+
+                                                    <li class=" pull-right"><img ng-src="{{commitem.ItemOwnerImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="listings-grid__item listings-grid__item--sold" ng-if="commitem.ISSold" ng-click="redirectitem(commitem.Item_ID)">
+                                        <a href="" class="media">
+                                            <div class="pull-right listings-grid__main">
+                                                <img ng-src="{{commitem.ItemImage}}" alt="">
+                                                <div class="listings-grid__price">معروض ل {{commitem.Type}}</div>
+                                            </div>
+
+                                            <div class="media-body">
+                                                <div class="listings-grid__body">
+                                                    <small>{{commitem.ItemName}}</small>
+                                                    <h5>عنوان البائع: {{commitem.ItemOwnerAddress}}</h5>
+                                                </div>
+
+                                                <ul class="listings-grid__attrs">
+                                                   <li class=" pull-left"><img ng-src="{{commitem.ItemOwnerImage}}" class="img-circle" style="width: 25px;"> <!-- <a href="owner.html"> Owner name</a> --></li>
+                                                </ul>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <h4 ng-if="communityitems.length === 0">لا يوجد منتجات مضافة لهذا المجتمع بعد</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Modal -->
+        <div class="modal fade" id="allmembersmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">كل اعضاء {{communityname}} </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div ng-repeat="communitymember in communitymembers">
+                            <a class="list-group-item media" href="" ng-click="redirectuser(communitymember.User_ID)" data-toggle="modal">
+                                <div class="pull-left">
+                                    <div class="avatar-char mdc-bg-amber-400" ng-if="communitymember.Image === null">{{communitymember.Name.substring(0, 2)}}</div>
+                                    <img ng-src="{{communitymember.Image}}" class="list-group__img img-circle" width="50" height="50" alt="" ng-if="user.Image !== null">
+                                </div>
+                                 <div class="media-body list-group__text">
+                                    <strong>{{communitymember.Name}}</strong>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="addfriends" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">اضافة الاصدقاء لهذا المجتمع</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="list-group__wrap" ng-repeat="friend in friends">
+                            <a class="list-group-item media">
+                                <div class="pull-left">
+                                    <img ng-src="{{friend.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
+                                </div>
+                                <div class="media-body list-group__text">
+                                    <strong>{{friend.Name}}</strong>
+                                    <small class="list-group__text">{{friend.Mobile}} . {{friend.Email}}</small>
+                                </div>
+                            </a>
+                            <div class="actions list-group__actions">
+                                <div class="dropdown">
+                                    <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="" ng-click="addtocommunity(friend.Refrence_ID)">الاضافة للمجتمع</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">اغلاق</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

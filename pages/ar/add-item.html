@@ -1,0 +1,86 @@
+
+
+        <section class="section">
+            <div class="container">
+                <header class="section__title">
+                    <h2>اضافة منتج جديد</h2>
+                </header>
+
+                <div class="submit-property">
+                    <!--<ul class="submit-property__steps">
+                        <li class="active"><a href="" data-target="#submit-property-1"  data-toggle="tab">1</a></li>
+                        <li><a href="" data-target="#submit-property-2" data-toggle="tab">2</a></li>
+
+                        <li><a href="" data-target="#submit-property-4" data-toggle="tab">3</a></li>
+                        <li><a href="" data-target="#submit-property-5" data-toggle="tab">4</a></li>
+                    </ul>-->
+
+                            <div class="card" ng-if="!readyforimage">
+                                <div class="card__header">
+                                    <h2>معلومات المنتج</h2>
+                                </div>
+
+                                <form class="card__body" ng-submit="addnewitem(addtocommunity, name, forrent, description, addtocategory)">
+                                    <div class="form-group form-group--float form-group--float-center">
+                                        <input type="text" class="form-control text-center" required ng-model="name">
+                                        <i class="form-group__bar"></i>
+                                        <label>اسم المنتج</label>
+                                    </div>
+                                    <div class="form-group form-group--float form-group--float-center">
+                                        <textarea class="form-control text-center textarea-autoheight" required ng-model="description"></textarea>
+                                        <i class="form-group__bar"></i>
+                                        <label>الوصف</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>فئة المنتج</label>
+                                        <select class="form-control" ng-model="addtocategory" required>
+                                            <option value="" disabled ng-selected>اختار واحدة</option>
+                                            <option ng-repeat="categ in allCategories" ng-value=categ.Category_ID>{{categ.Category_Name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>اضف لمجتمع</label>
+                                        <select class="form-control" ng-model="addtocommunity" required>
+                                            <option value="" disabled ng-selected>اختار واحد</option>
+                                            <option ng-repeat="commun in usrcommunities" ng-value=commun.Community_ID>{{commun.Community_Name}}</option>
+                                        </select>
+                                    </div>
+                                    <!--<div class="form-group form-group--float form-group--float-center">
+                                        <input type="text" class="form-control text-center" required ng-model="price">
+                                        <i class="form-group__bar"></i>
+                                        <label>سعر المنتج</label>
+                                    </div>-->
+                                    <div class="form-group">
+                                        <label>اعرضة ل </label>
+
+                                        <select class="select2" required ng-model="forrent" required>
+                                            <option ng-value="true">الاقتراض</option>
+                                            <option ng-value="false">التبادل</option>
+                                        </select>
+                                    </div>
+
+                                    <!--<a href="" data-target="#submit-property-4" data-toggle="tab" class="btn btn--circle btn-primary submit-property__button" type="submit">
+                                        <i class="zmdi zmdi-check"></i>
+                                    </a>-->
+                                    <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+                                </form>
+                            </div>
+                            <div class="card" ng-if="readyforimage">
+                                <div class="card__header">
+                                    <h2>صورة المنتج</h2>
+                                </div>
+
+                                <form class="card__body" ng-submit="uploaditemimage()">
+                                     <div class="new-contact__img">
+                                        <img src="img/user_empty.png" alt="">
+                                         <input type="file" id="myFileField" name="myFile" />
+                                    </div>
+                                    <!--<a href="" data-target="#submit-property-5" data-toggle="tab" class="btn btn--circle btn-primary submit-property__button" type="submit">
+                                        <i class="zmdi zmdi-check"></i>
+                                    </a>-->
+                                    <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>
+                                </form>
+                            </div>
+                </div>
+            </div>
+        </section>

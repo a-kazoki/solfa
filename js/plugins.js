@@ -531,9 +531,17 @@ myApp.controller("homeCtrl", ["$scope", "authFact", "$location", "$cookies", "$h
                 autoplayTimeout: 2000,
                 autoplayHoverPause: true
             });
-        } else {
+        } else if ($(window).width() > 450) {
             $(".owl-carousel").owlCarousel({
                 items: 2,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 2000,
+                autoplayHoverPause: true
+            });
+        } else {
+            $(".owl-carousel").owlCarousel({
+                items: 1,
                 loop: true,
                 autoplay: true,
                 autoplayTimeout: 2000,

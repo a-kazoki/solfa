@@ -111,7 +111,7 @@
                                     <div class="listings-grid__price" ng-if="ItemType !== Rent">للتبادل</div>
                                 </div>
                                 <div class="media-body">
-                                    <div class="listings-grid__body">
+                                    <div class="listings-grid__body pull-left">
                                         <small>{{usrwish.ItemOwnerAddress}}</small>
                                         <h5>{{usrwish.ItemName}}</h5>
                                         <h5>{{usrwish.Date.substr(0, 10)}}</h5>
@@ -130,7 +130,7 @@
                                     <div class="listings-grid__price" ng-if="ItemType !== Rent">للتبادل</div>
                                 </div>
                                 <div class="media-body">
-                                    <div class="listings-grid__body">
+                                    <div class="listings-grid__body pull-left">
                                         <small>{{usrwish.ItemOwnerAddress}}</small>
                                         <h5>{{usrwish.ItemName}}</h5>
                                         <h5>{{usrwish.Date.substr(0, 10)}}</h5>
@@ -146,20 +146,19 @@
                 <div role="tabpanel" class="tab-pane fade list-group" id="Communites">
                     <div class="list-group-item media" ng-if="usrcommunities.length === 0">انت لست عضو في اي مجتمع</div>
                     <div class="list-group-item media" ng-repeat="usrcommunity in usrcommunities">
-                        <a href="">
-                            <div class="pull-left">
+                        <a href="" ng-click="redirectcomm(usrcommunity.Community_ID)">
+                            <div class="pull-right">
                                 <img ng-src="{{usrcommunity.Community_Image}}" alt="" class="list-group__img" width="60">
                             </div>
-                            <div class="media-body list-group__text pull-left">
+                            <div class="media-body list-group__text pull-right" style="margin: 10px">
                                 <strong>{{usrcommunity.Community_Name}}</strong>
                                 <small>{{usrcommunity.No_Of_Members}} اعضاء . انضم: {{usrcommunity.Join_Date.substr(0, 10)}}</small>
                             </div>
                         </a>
-                        <div class="actions list-group__actions">
+                        <div class="actions" style="position: absolute; top: 18px; left: 10px">
                             <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="" ng-click="redirectcomm(usrcommunity.Community_ID)">افتح </a></li>    
-                                <li><a href="" ng-click="leavecommunity(usrcommunity.Community_ID)">اترك</a></li>
+                            <ul class="dropdown-menu pull-left"> 
+                                <li><a href="" class="pull-right" ng-click="leavecommunity(usrcommunity.Community_ID)">اترك</a></li>
                             </ul>
                         </div>
                     </div>
@@ -179,21 +178,20 @@
                         <div role="tabpanel" class="tab-pane active" id="currentfriends">
                             <div class="list-group__wrap" ng-if="friends.length === 0" style="padding: 15px">لا يوجد متابعيين عند اضافة البعض ستجدهم هنا </div>
                             <div class="list-group__wrap" ng-repeat="friend in friends">
-                                <a class="list-group-item media">
-                                    <div class="pull-left">
+                                <a class="list-group-item media" href="" ng-click="redirectuser(friend.Refrence_ID)">
+                                    <div class="pull-right">
                                         <img ng-src="{{friend.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
                                     </div>
-                                    <div class="media-body list-group__text pull-left">
+                                    <div class="media-body list-group__text pull-right">
                                         <strong>{{friend.Name}}</strong>
                                         <small class="list-group__text">{{friend.Mobile}} . {{friend.Email}}</small>
                                     </div>
                                 </a>
-                                <div class="actions list-group__actions">
+                                <div class="actions" style="position: absolute; top: 18px; left: 10px">
                                     <div class="dropdown">
                                         <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="" ng-click="redirectuser(friend.Refrence_ID)">افتح</a></li>
-                                            <li><a href="" ng-click="deleteuser(friend.Refrence_ID)">ازالة</a></li>
+                                        <ul class="dropdown-menu pull-left">
+                                            <li><a href="" class="pull-right" ng-click="deleteuser(friend.Refrence_ID)">ازالة</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -206,21 +204,20 @@
                         <div role="tabpanel" class="tab-pane" id="newfriends">
                             <div class="list-group__wrap" ng-if="requests.length === 0" style="padding: 15px">لا يوجد طلبات متابعة الان</div>
                             <div class="list-group__wrap" ng-repeat="request in requests">
-                                <a class="list-group-item media">
-                                    <div class="pull-left">
+                                <a class="list-group-item media" href="" ng-click="redirectuser(request.RequesterID)">
+                                    <div class="pull-right">
                                         <img ng-src="{{request.RequesterImage}}" alt="" class="list-group__img img-circle" width="65" height="65">
                                     </div>
-                                    <div class="media-body list-group__text pull-left">
+                                    <div class="media-body list-group__text pull-right">
                                         <strong>{{request.RequesterName}}</strong>
                                     </div>
                                 </a>
-                                <div class="actions list-group__actions">
+                                <div class="actions" style="position: absolute; top: 18px; left: 10px">
                                     <div class="dropdown">
                                         <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="" ng-click="redirectuser(request.RequesterID)">الفتح</a></li>
-                                            <li><a href="" ng-click="acceptreq(request.RequesterID)">القبول</a></li>
-                                            <li><a href="" ng-click="declinereq(request.RequesterID)">الرفض</a></li>
+                                        <ul class="dropdown-menu pull-left">
+                                            <li><a href="" class="pull-right" ng-click="acceptreq(request.RequesterID)">القبول</a></li>
+                                            <li><a href="" class="pull-right" ng-click="declinereq(request.RequesterID)">الرفض</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -231,25 +228,24 @@
                 <div role="tabpanel" class="tab-pane fade list-group m-t-20" id="items">
                     <div class="list-group__wrap" ng-if="useritems.length === 0" style="padding: 15px">لا يوجد منجات بعد اضف منتج و سوف يظهلر هنا </div>
                     <div class="list-group__wrap" ng-repeat="item in useritems">
-                        <a class="list-group-item media" style="cursor: default">
-                            <div class="pull-left">
+                        <a class="list-group-item media" href="" ng-click="redirectitempage(item.Item_ID)">
+                            <div class="pull-right">
                                 <img ng-src="{{item.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
                             </div>
-                            <div class="media-body list-group__text pull-left">
+                            <div class="media-body list-group__text pull-right">
                                 <strong>{{item.Name}}</strong>
                                 <span style="color: #f00" ng-if="item.Sold">المنتج مسجل غير متاح</span>
                                 <span style="color: #00f" ng-if="!item.Sold">المنتج مسجل متاح</span>
                                 <small class="list-group__text"><!--السعر: {{item.Price}} ,--> <span ng-if="item.Rent">للاقتراض</span> <span ng-if="item.Exchange">للتبادل</span></small>
                             </div>
                         </a>
-                        <div class="actions list-group__actions">
+                        <div class="actions" style="position: absolute; top: 18px; left: 10px">
                             <div class="dropdown">
                                 <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="" ng-click="redirectitempage(item.Item_ID)">الفتح</a></li>
-                                    <li><a href="" ng-click="solditem(item.Item_ID)" ng-if="item.Sold">اجعلة متاح</a></li>
-                                    <li><a href="" ng-click="solditem(item.Item_ID)" ng-if="!item.Sold">اجعلة غير متاح</a></li>
-                                    <li><a href="" data-toggle="modal" data-target="#{{item.Item_ID}}_myModal">التعديل</a></li>
+                                <ul class="dropdown-menu pull-left">
+                                    <li><a href="" class="pull-right" ng-click="solditem(item.Item_ID)" ng-if="item.Sold">اجعلة متاح</a></li>
+                                    <li><a href="" class="pull-right" ng-click="solditem(item.Item_ID)" ng-if="!item.Sold">اجعلة غير متاح</a></li>
+                                    <li><a href="" class="pull-right" data-toggle="modal" data-target="#{{item.Item_ID}}_myModal">التعديل</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -9,7 +9,34 @@
             border-radius:2px;
             font-weight: 500;
         }
+        .searchbar {padding-left: 50px}
+        @media screen and (min-width: 450px) {
+            .shifted-right {
+                float: right; 
+                margin: 30px
+            }
+        }
+        @media screen and (max-width: 450px) {
+            .shifted-right {
+                display: block;
+                margin: auto
+            }
+        }
+        @media screen and (min-width: 450px) {
+            .shifted-left {
+                float: left; 
+                margin: 30px
+            }
+        }
+        @media screen and (max-width: 450px) {
+            .shifted-left {
+                display: block;
+                margin: 30px auto
+            }
+        }
     </style>
+    <link rel="stylesheet" href="vendors/bower_components/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendors/bower_components/owlcarousel/owl.theme.default.min.css">
         <header id="lowerheader">
             <div class="header__search container">
                 <form ng-submit="search(search_type, selectcat, keyword)">
@@ -22,7 +49,7 @@
                             </select>
                         </div>
                         <div class="search__body">
-                            <input type="text" class="search__input" placeholder="ما الذي تبحث عنه؟" data-rmd-action="advanced-search-open" ng-model="keyword" style="margin-left:25px">
+                            <input type="text" class="search__input searchbar" placeholder="ما الذي تبحث عنه؟" data-rmd-action="advanced-search-open" ng-model="keyword">
                             <div class="search__advanced">
 
                                 <div class="col-sm-6">
@@ -44,9 +71,9 @@
                     </div>
                 </form>
                 <br>
-                <button class="yellow_button" style="float:right; width:130px; border:none; margin:30px" ng-click="categiriespage()">كل الفئات</button>
-                <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" ng-click="additempage()" ng-if="islogedin">اضافة منتج</button>
-                <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" ng-if="!islogedin">يجب تسجيل الدخول لاضافة منتج</button>
+                <button class="yellow_button shifted-right" style="width:130px; border:none" ng-click="categiriespage()">كل الفئات</button>
+                <button class="yellow_button shifted-left" style="width:130px; border:none" ng-click="additempage()" ng-if="islogedin">اضافة منتج</button>
+                <button class="yellow_button shifted-left" style="width:130px; border:none" ng-if="!islogedin">يجب تسجيل الدخول لاضافة منتج</button>
             </div>
             <div class="header__recommended">
                 <div class="my-location">
@@ -56,54 +83,149 @@
                         </div>
                     </div>
                 </div>
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
-                        <div class="carousel-inner" role="listbox">
-                            <div class="item active" style="">
-                                <div class="listings-grid__item" style="width: 400px; height: 400px;margin: auto; display: block">
-                                    <a href="" ng-click="redirectitem(ExclItems[0].Item_ID)">
-                                        <div class="listings-grid__main">
-                                            <img ng-src="{{ExclItems[0].ItemImage}}" alt="" style="height:250px">
-                                            <div class="listings-grid__price">{{ExclItems[0].Type}}</div>
-                                        </div>
-                                        <div class="listings-grid__body">
-                                            <small>{{ExclItems[0].ItemOwnerAddress}}</small>
-                                            <h5>{{ExclItems[0].ItemName}}</h5>
-                                        </div>
-                                        <ul class="listings-grid__attrs">
-                                            <li><img ng-src="{{ExclItems[0].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
-                                        </ul>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item" ng-repeat="execl in ExclItems | limitTo : -ExclItems.length-1">
-                                <div class="listings-grid__item" style="width: 400px; height: 400px; margin: auto; display: block">
-                                    <a href="" ng-click="redirectitem(execl.Item_ID)">
-                                        <div class="listings-grid__main">
-                                            <img ng-src="{{execl.ItemImage}}" alt="" style="height:250px">
-                                            <div class="listings-grid__price">{{execl.Type}}</div>
-                                        </div>
-                                        <div class="listings-grid__body">
-                                            <small>{{execl.ItemOwnerAddress}}</small>
-                                            <h5>{{execl.ItemName}}</h5>
-                                        </div>
-                                        <ul class="listings-grid__attrs">
-                                            <li><img ng-src="{{execl.ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
-                                        </ul>
-                                    </a>
-                                </div>
+                <!-- Set up your HTML -->
+                <div class="owl-carousel" dir="ltr">
+                    <div><!-- slide 1 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[0].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[0].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[0].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[0].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[0].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[0].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[0].UserRating}}</li>
+                                    </ul>
+                                </a>
                             </div>
                         </div>
-                        <!-- Controls -->
-                        <a class="left carousel-control" href="" data-target="#carousel-example-generic" role="button" data-slide="prev">
-                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="right carousel-control" href="" data-target="#carousel-example-generic" role="button" data-slide="next">
-                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
                     </div>
+                    <div><!-- slide 2 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[1].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[1].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[1].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[1].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[1].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[1].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[1].UserRating}}</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div><!-- slide 3 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[2].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[2].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[2].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[2].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[2].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[2].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[2].UserRating}}</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div><!-- slide 4 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[3].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[3].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[3].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[3].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[3].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[3].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[3].UserRating}}</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div><!-- slide 5 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[4].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[4].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[4].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[4].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[4].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[4].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[4].UserRating}}</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div><!-- slide 6 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[5].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[5].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[5].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[5].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[5].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[5].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[5].UserRating}}</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div><!-- slide 7 -->
+                        <div class="item">
+                            <div class="listings-grid__item" style="width: 90%; height: 350px;margin: auto; display: block">
+                                <a href="" ng-click="redirectitem(ExclItems[6].Item_ID)">
+                                    <div class="listings-grid__main">
+                                        <img ng-src="{{ExclItems[6].ItemImage}}" alt="" style="height:200px">
+                                        <div class="listings-grid__price">{{ExclItems[6].Type}}</div>
+                                    </div>
+                                    <div class="listings-grid__body">
+                                        <small>{{ExclItems[6].ItemOwnerAddress}}</small>
+                                        <h5>{{ExclItems[6].ItemName}}</h5>
+                                    </div>
+                                    <ul class="listings-grid__attrs">
+                                        <li><img ng-src="{{ExclItems[6].ItemOwnerImage}}" class="img-circle pull-right" style="width: 25px;"></li>
+                                        <li>User rating: {{ExclItems[6].UserRating}}</li>
+                                    </ul>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
         <section class="section">
@@ -113,32 +235,6 @@
                 </header>-->
 
                 <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="card__header card__header--minimal">
-                                <h2>احدث المجتمعات</h2>
-                                <!--<small>Nunc urnami tempor eget ipsum eurutrum gravida tellus</small>-->
-                            </div>
-
-                            <div class="grid-widget grid-widget--listings">
-                                <div class="col-xs-6" ng-repeat="recentcomm in recentcommunities">
-                                    <a class="grid-widget__item" href="" ng-click="redirectcomm(recentcomm.Community_ID)">
-                                        <img ng-src="{{recentcomm.CommunityImage}}" alt="" style="height: 250px">
-                                        <div class="grid-widget__info">
-                                            <h3>{{recentcomm.CommunityName}}</h3>
-                                            <ul class="listings-grid__attrs">
-                                             <li ng-repeat="commuser in recentcomm.CommunityMembers"><img ng-src="{{commuser.UserImage}}" class="img-circle" style="width: 25px;"></li>
-                                            </ul>
-                                            <p>{{recentcomm.Members_NO}} اعضاء</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <button class="yellow_button" style="float:right; width:130px; border:none; margin:30px" ng-click="communitiespage()">استكشف كل المجتمعات</button>
-                            <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" data-toggle="modal" data-target="#addcommunitymodal" ng-if="islogedin">انشاء مجتمع جديد</button>
-                            <button class="yellow_button" style="float:left; width:130px; border:none; margin:30px" ng-if="!islogedin">يجب تسجيل الدخول لانشاء مجتمع جديد</button>
-                        </div>
-                    </div>
 
                     <div class="col-md-4">
                         <div class="card tags-list">
@@ -190,6 +286,32 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card__header card__header--minimal">
+                                <h2>احدث المجتمعات</h2>
+                                <!--<small>Nunc urnami tempor eget ipsum eurutrum gravida tellus</small>-->
+                            </div>
+
+                            <div class="grid-widget grid-widget--listings">
+                                <div class="col-sm-6" ng-repeat="recentcomm in recentcommunities">
+                                    <a class="grid-widget__item" href="" ng-click="redirectcomm(recentcomm.Community_ID)" style="max-width: 450px">
+                                        <img ng-src="{{recentcomm.CommunityImage}}" alt="" style="height: 250px">
+                                        <div class="grid-widget__info">
+                                            <h3>{{recentcomm.CommunityName}}</h3>
+                                            <ul class="listings-grid__attrs">
+                                             <li ng-repeat="commuser in recentcomm.CommunityMembers"><img ng-src="{{commuser.UserImage}}" class="img-circle" style="width: 25px;"></li>
+                                            </ul>
+                                            <p>{{recentcomm.Members_NO}} اعضاء</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <button class="yellow_button shifted-right" style="width:130px; border:none" ng-click="communitiespage()">استكشف كل المجتمعات</button>
+                            <button class="yellow_button shifted-left" style="width:130px; border:none" data-toggle="modal" data-target="#addcommunitymodal" ng-if="islogedin">انشاء مجتمع جديد</button>
+                            <button class="yellow_button shifted-left" style="width:130px; border:none" ng-if="!islogedin">يجب تسجيل الدخول لانشاء مجتمع جديد</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -236,3 +358,4 @@
     </div>
   </div>
 </div>
+<script src="vendors/bower_components/owlcarousel/owl.carousel.min.js"></script>

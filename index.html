@@ -47,6 +47,17 @@
     </head>
 
     <body ng-app="myApp">
+        <style>
+            .yellow_button {
+                height: 50px;
+                background-color: #fecf09;
+                font-size: 13px;
+                color: #3e3e3e;
+                text-transform: uppercase;
+                border-radius:2px;
+                font-weight: 500;
+            }
+        </style>
         <!-- Start page loader -->
        <div id="page-loader">
            <img src="img/logo.png" class="ImagePreloader">
@@ -91,7 +102,7 @@
 
                                     <div>Sign up using<br>
                                     <span ng-if="facebookerrorreg" style="color: #f00">{{facebookerrormsg}}</span></div>
-                                    <button type="submit" ng-show="regpass === reregpass" class="btn btn-primary btn-block m-t-10 m-b-10" ng-click="FBReg()"><i class="zmdi zmdi-facebook"></i></button>
+                                    <button class="btn btn-primary btn-block m-t-10 m-b-10" ng-click="FBReg()"><i class="zmdi zmdi-facebook"></i></button>
                                     
                                 </div>
 
@@ -202,19 +213,8 @@
                                     </select>
                                 </div>
                                 <div class="search__body">
-                                    <input type="text" class="search__input" placeholder="What are you looking for" data-rmd-action="advanced-search-open" ng-model="keyword" style="margin-left:25px">
+                                    <input type="text" class="search__input" placeholder="What are you looking for" data-rmd-action="advanced-search-open" ng-model="keyword" style="padding-left:50px" required>
                                     <div class="search__advanced">
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Category Type</label>
-
-                                                <select class="select2" ng-model="selectcat">
-                                                    <option value="" disabled ng-selected>Select category</option>
-                                                    <option ng-value=cat.Category_ID ng-repeat="cat in allCategories">{{cat.Category_Name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
                                         <div class="col-xs-12 m-t-10">
                                             <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#searchbar" aria-expanded="false" aria-controls="searchbar">Search</button>
                                             <button class="btn btn-link" data-rmd-action="advanced-search-close">Cancel</button>

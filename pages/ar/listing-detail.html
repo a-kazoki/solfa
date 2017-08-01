@@ -122,10 +122,10 @@
                             </div>
                         </a>
                         <div ng-if="islogedin && isownerview">
-                            <div class="actions list-group__actions">
+                            <div class="actions" style="position: absolute; top: 18px; left: 10px">
                                 <div class="dropdown">
                                     <br><a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-right pull-left">
+                                    <ul class="dropdown-menu dropdown-menu-right pull-right">
                                         <li><a href="" ng-click="solditem(itemid, itemdetails.Owner)" ng-if="!itemdetails.Sold">اجعل المنتج غير متاح</a></li>
                                         <li><a href="" ng-click="solditem(itemid, itemdetails.Owner)" ng-if="itemdetails.Sold">اجعل المنتج متاح</a></li>
                                         <li><a href="" data-toggle="modal" data-target="#{{itemid}}_myModal">تعديل المنتج</a></li>
@@ -170,10 +170,10 @@
 
                 <div class="card">
                     <div class="card__header">
-                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" id="addClass" data-toggle="modal" data-target="#Vchat_modal" ng-if="islogedin && !isownerview && !itemdetails.Sold" ng-click="getfirstmessages(iteminbox[0].Negotiation_ID)">
+                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" id="addClass" data-toggle="modal" data-target="#Vchat_modal" ng-if="islogedin && !isownerview && !itemdetails.Sold" ng-click="getfirstmessages(iteminbox[0].Negotiation_ID)">
                             <span>بدا المحادثة مع المالك</span>
                         </button>
-                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-right" id="addClass" data-toggle="modal" data-target="#Ochat_modal" ng-if="islogedin && isownerview && !itemdetails.Sold">
+                        <button class="btn btn-default btn-sm m-t-15 mdc-text-orange-700 pull-left" id="addClass" data-toggle="modal" data-target="#Ochat_modal" ng-if="islogedin && isownerview && !itemdetails.Sold">
                             <span>اعرض الطلبات</span>
                         </button>
                         <span class="pull-right" id="addClass" ng-if="itemdetails.Sold">المنتج غير متاح الان</span>

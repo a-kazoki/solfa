@@ -146,7 +146,7 @@
                 <div role="tabpanel" class="tab-pane fade list-group" id="Communites">
                     <div class="list-group-item media" ng-if="usrcommunities.length === 0">You are not part of any community</div>
                     <div class="list-group-item media" ng-repeat="usrcommunity in usrcommunities">
-                        <a href="">
+                        <a href="" ng-click="redirectcomm(usrcommunity.Community_ID)">
                             <div class="pull-left">
                                 <img ng-src="{{usrcommunity.Community_Image}}" alt="" class="list-group__img" width="60">
                             </div>
@@ -158,7 +158,6 @@
                         <div class="actions list-group__actions">
                             <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
                             <ul class="dropdown-menu pull-right">
-                                <li><a href="" ng-click="redirectcomm(usrcommunity.Community_ID)">View </a></li>    
                                 <li><a href="" ng-click="leavecommunity(usrcommunity.Community_ID)">Leave</a></li>
                             </ul>
                         </div>
@@ -179,7 +178,7 @@
                         <div role="tabpanel" class="tab-pane active" id="currentfriends">
                             <div class="list-group__wrap" ng-if="friends.length === 0" style="padding: 15px">There are no friends to show yet. add some and you will find them here.</div>
                             <div class="list-group__wrap" ng-repeat="friend in friends">
-                                <a class="list-group-item media">
+                                <a class="list-group-item media" href="" ng-click="redirectuser(friend.Refrence_ID)">
                                     <div class="pull-left">
                                         <img ng-src="{{friend.Image}}" alt="" class="list-group__img img-circle" width="65" height="65">
                                     </div>
@@ -192,7 +191,6 @@
                                     <div class="dropdown">
                                         <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="" ng-click="redirectuser(friend.Refrence_ID)">View</a></li>
                                             <li><a href="" ng-click="deleteuser(friend.Refrence_ID)">Remove</a></li>
                                         </ul>
                                     </div>

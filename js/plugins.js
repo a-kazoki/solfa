@@ -462,7 +462,11 @@ myApp.controller("generalheadCtrl", ["$scope", "$sce", "authFact", "$location", 
     $scope.redirectuser = function (x) {
         $('#findfriends').modal('hide');
         console.log(x);
-        $location.path("/profile/" + x);
+        if (x == $scope.userid) {
+            $location.path("/myprofile");
+        } else {
+            $location.path("/profile/" + x);
+        }
     };
     //logout
     $scope.logout = function () {
@@ -510,6 +514,34 @@ myApp.controller("generalfootCtrl", ["$scope", "$location", "$cookies", "$http",
 //homeCtrl js
 myApp.controller("homeCtrl", ["$scope", "authFact", "$location", "$cookies", "$http", function ($scope, authFact, $location, $cookies, $http) {
     "use strict";
+    $(document).ready(function () {
+        if ($(window).width() > 1200) {
+            $(".owl-carousel").owlCarousel({
+                items: 4,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 2000,
+                autoplayHoverPause: true
+            });
+        } else if ($(window).width() > 900) {
+            $(".owl-carousel").owlCarousel({
+                items: 3,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 2000,
+                autoplayHoverPause: true
+            });
+        } else {
+            $(".owl-carousel").owlCarousel({
+                items: 2,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 2000,
+                autoplayHoverPause: true
+            });
+        }
+        
+    });
     //if already loged in
     $scope.userid = authFact.getAccessToken();
     console.log($scope.userid);
@@ -608,7 +640,11 @@ myApp.controller("homeCtrl", ["$scope", "authFact", "$location", "$cookies", "$h
     //select user
     $scope.redirectuser = function (x) {
         console.log(x);
-        $location.path("/profile/" + x);
+        if (x == $scope.userid) {
+            $location.path("/myprofile");
+        } else {
+            $location.path("/profile/" + x);
+        }
     };
     //select commun
     $scope.redirectcomm = function (x) {
@@ -1305,7 +1341,11 @@ myApp.controller("boardCtrl", ["$scope", "authFact", "$location", "$cookies", "$
     //select user
     $scope.redirectuser = function (x) {
         console.log(x);
-        $location.path("/profile/" + x);
+        if (x == $scope.userid) {
+            $location.path("/myprofile");
+        } else {
+            $location.path("/profile/" + x);
+        }
     };
 }]);
 //AllcommunitiesCtrl js
@@ -1645,7 +1685,11 @@ myApp.controller("var_profileCtrl", ["$scope", "$sce", "authFact", "$location", 
     //select user
     $scope.redirectuser = function (x) {
         console.log(x);
-        $location.path("/profile/" + x);
+        if (x == $scope.userid) {
+            $location.path("/myprofile");
+        } else {
+            $location.path("/profile/" + x);
+        }
     };
     //get visited relation
     $http({
@@ -2085,7 +2129,11 @@ myApp.controller("var_itemCtrl", ["$scope", "$sce", "authFact", "$location", "$c
         });
     //owner profile page
     $scope.redirectprofile = function (x) {
-        $location.path("/profile/" + x);
+        if (x == $scope.userid) {
+            $location.path("/myprofile");
+        } else {
+            $location.path("/profile/" + x);
+        }
     };
     //sell or unsell item
     $scope.solditem = function (x, y) {
@@ -2191,7 +2239,11 @@ myApp.controller("var_communityCtrl", ["$scope", "authFact", "$location", "$cook
     $scope.redirectuser = function (x) {
         console.log(x);
         $('#allmembersmodal').modal("hide");
-        $location.path("/profile/" + x);
+        if (x == $scope.userid) {
+            $location.path("/myprofile");
+        } else {
+            $location.path("/profile/" + x);
+        }
     };
     //ask to join
     $scope.requestjoin = function () {

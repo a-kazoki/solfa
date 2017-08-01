@@ -325,12 +325,12 @@ myApp.controller("generalheadCtrl", ["$scope", "$sce", "authFact", "$location", 
     //if already loged in
     $scope.userid = authFact.getAccessToken();
         //sharelink facebook
-    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Flocalhost%3A8887%2Fsolfa%2Fnew%2520solfa%2Findex.html%23!%2Fprofile%2F" + $scope.userid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
+    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fyackeen-test.ga%2Findex.html%23!%2Fprofile%2F" + $scope.userid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
         //send_invitation
     $scope.invitation = function () {
         $http({
             method: "POST",
-            data: JSON.stringify({"UserID": $scope.userid, "RegistrationURL": "http://localhost:8888/solfa/new%20solfa/index.html#!/invite/" + $scope.userid, "InvitedE_mail": $scope.invitemail}),
+            data: JSON.stringify({"UserID": $scope.userid, "RegistrationURL": "http://yackeen-test.ga/index.html#!/invite/" + $scope.userid, "InvitedE_mail": $scope.invitemail}),
             url: apiurl + "User/InviteFriend"
         });
         $scope.invitemail = "";
@@ -414,7 +414,7 @@ myApp.controller("generalheadCtrl", ["$scope", "$sce", "authFact", "$location", 
         if (y === z) {
             $http({
                 method: "POST",
-                data: JSON.stringify({"Email": x, "Password": y, "Name": w, "RegistrationURL": "http://localhost:8888/solfa/new%20solfa/index.html#!/confirm"}),
+                data: JSON.stringify({"Email": x, "Password": y, "Name": w, "RegistrationURL": "http://yackeen-test.ga/index.html#!/confirm"}),
                 url: apiurl + "User/Registration"
             })
                 .then(function (response) {
@@ -738,7 +738,7 @@ myApp.controller("profileCtrl", ["$scope", "$sce", "authFact", "$location", "$co
     $scope.communitiespage = function () {$location.path("/all_communities"); };
     //if already loged in
     $scope.userid = authFact.getAccessToken();
-    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Flocalhost%3A8887%2Fsolfa%2Fnew%2520solfa%2Findex.html%23!%2Fprofile%2F" + $scope.userid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
+    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fyackeen-test.ga%2Findex.html%23!%2Fprofile%2F" + $scope.userid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
     //get user details
     $http({
         method: "POST",
@@ -778,7 +778,7 @@ myApp.controller("profileCtrl", ["$scope", "$sce", "authFact", "$location", "$co
     $scope.invitation = function (x, y) {
         $http({
             method: "POST",
-            data: JSON.stringify({"UserID": x, "RegistrationURL": "http://localhost:8888/solfa/new%20solfa/index.html#!/invite/" + x, "InvitedE_mail": y}),
+            data: JSON.stringify({"UserID": x, "RegistrationURL": "http://yackeen-test.ga/index.html#!/invite/" + x, "InvitedE_mail": y}),
             url: apiurl + "User/InviteFriend"
         });
         $scope.invitemail = "";
@@ -1525,7 +1525,7 @@ myApp.controller("var_blogCtrl", ["$scope", "$sce", "authFact", "$location", "$c
     console.log("blog");
     $scope.blogid = locationurl.slice((locationurl.indexOf("blog/") + 5));
     console.log($scope.blogid);
-    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Flocalhost%3A8887%2Fsolfa%2Fnew%2520solfa%2Findex.html%23!%2Fblog%2F" + $scope.blogid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
+    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fyackeen-test.ga%2Findex.html%23!%2Fblog%2F" + $scope.blogid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
     //get blog details
     $http({
         method: "POST",
@@ -1891,7 +1891,7 @@ myApp.controller("var_itemCtrl", ["$scope", "$sce", "authFact", "$location", "$c
     $scope.itemid = locationurl.slice((locationurl.indexOf("item/") + 5));
     console.log($scope.itemid);
     //share link
-    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Flocalhost%3A8887%2Fsolfa%2Fnew%2520solfa%2Findex.html%23!%2Fitem%2F" + $scope.itemid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
+    $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fyackeen-test.ga%2Findex.html%23!%2Fitem%2F" + $scope.itemid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
     // get share points
     $scope.getsharepoints = function () {
         $http({
@@ -2490,7 +2490,7 @@ myApp.controller("var_confirmCtrl", ["$scope", "authFact", "$location", "$cookie
     $scope.invitation = function () {
         $http({
             method: "POST",
-            data: JSON.stringify({"UserID": $scope.userid, "RegistrationURL": "http://localhost:8888/solfa/new%20solfa/index.html#!/invite/" + $scope.userid, "InvitedE_mail": $scope.invitemail}),
+            data: JSON.stringify({"UserID": $scope.userid, "RegistrationURL": "http://yackeen-test.ga/index.html#!/invite/" + $scope.userid, "InvitedE_mail": $scope.invitemail}),
             url: apiurl + "User/InviteFriend"
         });
         $scope.invitemail = "";

@@ -1,8 +1,8 @@
 #page-loader{
-    background-color: #10193e;
+    background-color: #70bccc;
 }
 #header ,#footer, #lowerheader{
-    background-color: #10193e;
+    background-color: #70bccc;
 }
 .header__top{
     background-color: rgba(0, 0, 0, .1);
@@ -36,8 +36,8 @@
     color: #49adbb;
 }
 .tags-list__item{
-	color: #10193e;
-    border: 2px solid #10193e;
+	color: #70bccc;
+    border: 2px solid #70bccc;
 }
 .footer__to-top{
 	background-color: #48adbb;
@@ -160,9 +160,9 @@ background-color: #49acbc;
     width: 100%;
 }
 .bg_none i {
-    border: 1px solid #10193e;
+    border: 1px solid #70bccc;
     border-radius: 25px;
-    color: #10193e;
+    color: #70bccc;
     font-size: 17px;
     height: 33px;
     line-height: 30px;
@@ -224,7 +224,7 @@ background-color: #49acbc;
 
 
 .popup-box .popup-messages {
-    background: #10193e  none repeat scroll 0 0;
+    background: #70bccc  none repeat scroll 0 0;
     height: 275px;
     overflow: auto;
 }

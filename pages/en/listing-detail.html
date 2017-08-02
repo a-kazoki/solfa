@@ -8,8 +8,8 @@
 
                     <div class="actions actions--section">
                         <div ng-if="!isownerview">
-                            <span ng-if="!isalreadywished" ng-click="addwish()" style="cursor: pointer"><i class="zmdi zmdi-favorite-outline zmdi-hc-lg"></i></span>
-                            <span ng-if="isalreadywished" ng-click="removewish()" style="cursor: pointer"><i class="zmdi zmdi-favorite zmdi-hc-lg"></i></span>
+                            <span ng-if="!isalreadywished && islogedin" ng-click="addwish()" style="cursor: pointer"><i class="zmdi zmdi-favorite-outline zmdi-hc-lg"></i></span>
+                            <span ng-if="isalreadywished && islogedin" ng-click="removewish()" style="cursor: pointer"><i class="zmdi zmdi-favorite zmdi-hc-lg"></i></span>
                         </div>
                         <div class="dropdown">
                             <!--<a href="" data-toggle="dropdown"><i class="zmdi zmdi-share"></i></a>-->

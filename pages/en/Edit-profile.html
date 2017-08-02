@@ -50,7 +50,8 @@
 
                                 <form class="card__body" ng-submit="editprofileimage()">
                                      <div class="new-contact__img">
-                                        <img src="img/user_empty.png" alt="">
+                                        <img ng-src="{{userdetails.ImageURL}}" alt="" ng-if="userdetails.ImageURL != null">
+                                        <img src="img/user_empty.png" alt="" ng-if="userdetails.ImageURL == null">
                                          <input type="file" id="myFileField" name="myFile" />
                                     </div>
                                     <button class="btn btn--circle btn-primary submit-property__button" type="submit"><i class="zmdi zmdi-check"></i></button>

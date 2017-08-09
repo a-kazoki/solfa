@@ -1894,21 +1894,23 @@ myApp.controller("var_itemCtrl", ["$scope", "$sce", "authFact", "$location", "$c
     $scope.sharelink = $sce.trustAsResourceUrl("https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2Fyackeen-test.ga%2Findex.html%23!%2Fitem%2F" + $scope.itemid + "&layout=button&size=small&mobile_iframe=false&appId=334831406936384&width=59&height=20");
     // get share points
     $scope.getsharepoints = function () {
-        $http({
-            method: "POST",
-            data: JSON.stringify({"UserID": $scope.userid}),
-            url: apiurl + "User/ShareItemPoints"
-        })
-            .then(function (response) {
-                if (response.data.IsSuccess) {
-                    console.log(response.data);
-                } else {
-                    $scope.errormsg = response.data.errorMessage;
-                    console.log($scope.errormsg);
-                }
-            }, function (reason) {
-                console.log(reason.data);
-            });
+        if ($scope.islogedin) {
+            $http({
+                method: "POST",
+                data: JSON.stringify({"UserID": $scope.userid}),
+                url: apiurl + "User/ShareItemPoints"
+            })
+                .then(function (response) {
+                    if (response.data.IsSuccess) {
+                        console.log(response.data);
+                    } else {
+                        $scope.errormsg = response.data.errorMessage;
+                        console.log($scope.errormsg);
+                    }
+                }, function (reason) {
+                    console.log(reason.data);
+                });
+        }
     };
     console.log($scope.sharelink);
     // item relation to visitor
